@@ -1,0 +1,9 @@
+name = "Portfolio Theme"
+license = "MIT"
+description = "Thème portfolio glassmorphism / blueprint pour Clément 'Clix' GARCIA"
+homepage = "https://clixmods.github.io/"
+min_version = "0.128.0"
+
+[author]
+  name = "Clément GARCIA"
+  homepage = "https://github.com/clixmods"

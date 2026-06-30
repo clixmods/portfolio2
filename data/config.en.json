@@ -1,0 +1,62 @@
+{
+  "site": {
+    "title": "Portfolio"
+  },
+  "navigation": [
+    {
+      "anchor": "profile",
+      "label": "Profile",
+      "icon": "👤",
+      "active": true
+    },
+    {
+      "anchor": "skills",
+      "label": "Skills",
+      "icon": "⚡",
+      "url": "/en/skills/"
+    },
+    {
+      "anchor": "blog",
+      "label": "Blog",
+      "icon": "📝"
+    },
+    {
+      "anchor": "projects",
+      "label": "Projects",
+      "icon": "💼"
+    },
+    {
+      "anchor": "education",
+      "label": "Education",
+      "icon": "🎓",
+      "url": "/en/educations/"
+    },
+    {
+      "anchor": "experiences",
+      "label": "Experiences",
+      "icon": "🏆",
+      "url": "/en/experiences/"
+    }
+  ],
+  "blog": {
+    "homeLimit": 3,
+    "dateFormat": "Jan 02, 2006"
+  },
+  "contact": {
+    "subjects": [
+      { "value": "internship", "label": "Internship proposal" },
+      { "value": "apprenticeship", "label": "Apprenticeship offer" },
+      { "value": "project", "label": "Project collaboration" },
+      { "value": "freelance", "label": "Freelance mission" },
+      { "value": "other", "label": "Other" }
+    ]
+  },
+  "social": [
+    { "title": "LinkedIn", "url": "https://linkedin.com/in/clementg4", "icon": "💼", "external": true },
+    { "title": "GitHub", "url": "https://github.com/clixmods", "icon": "🐙", "external": true },
+    { "title": "Email", "url": "mailto:clement.g.developer@gmail.com", "icon": "📧" },
+    { "title": "Discord", "url": "#", "icon": "🎮" },
+    { "title": "Phone", "url": "#", "icon": "📱" },
+    { "title": "ArtStation", "url": "https://www.artstation.com/clix/", "icon": "🎨", "external": true }
+  ]
+}

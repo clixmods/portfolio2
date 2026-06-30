@@ -1,0 +1,157 @@
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.testimonial {
+  @include glass(var(--r-lg));
+  @include glass-sheen;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .testimonial-quote {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    line-height: 1.65;
+    position: relative;
+
+    &::before {
+      content: "\201C";
+      font-family: var(--font-head);
+      font-size: 2.6rem;
+      line-height: 0;
+      color: var(--violet);
+      opacity: 0.5;
+      margin-right: 4px;
+      vertical-align: -0.35em;
+    }
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--glass-border);
+
+    img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--glass-border-hi);
+    }
+    .testimonial-name { font-family: var(--font-head); font-weight: 600; font-size: 0.88rem; color: #fff; }
+    .testimonial-role { font-size: 0.74rem; color: var(--text-dim); }
+  }
+}
+
+@media (max-width: 920px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+// ── Carrousel (un témoignage à la fois) ───────────────────
+.testi-carousel {
+  @include glass(var(--r-lg));
+  @include glass-sheen;
+  position: relative;
+  max-width: 820px;
+  margin-inline: auto;
+  padding: clamp(26px, 4vw, 44px) clamp(24px, 4vw, 48px) 30px;
+  overflow: hidden;
+}
+
+// pile : toutes les slides dans la même cellule → hauteur = la plus grande
+.testi-viewport { display: grid; }
+
+.testi-slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &.is-active { opacity: 1; visibility: visible; transform: none; }
+}
+
+.testi-quote {
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--text);
+  position: relative;
+
+  &::before {
+    content: "\201C";
+    font-family: var(--font-head);
+    font-size: 3rem;
+    line-height: 0;
+    color: var(--violet);
+    opacity: 0.45;
+    margin-right: 6px;
+    vertical-align: -0.4em;
+  }
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--glass-border-hi);
+  }
+  .testimonial-name { font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: #fff; }
+  .testimonial-role { font-size: 0.8rem; color: var(--text-dim); }
+}
+
+// barre de progression (remplie par JS selon la durée)
+.testi-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+
+  span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--grad-cold);
+    box-shadow: 0 0 12px -2px rgba(59, 130, 246, 0.7);
+  }
+}
+
+// pastilles de navigation
+.testi-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+.testi-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, width 0.25s ease;
+
+  &:hover { background: rgba(255, 255, 255, 0.4); }
+  &.is-active { width: 22px; border-radius: var(--r-pill); background: var(--grad-cold); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testi-slide { transition: none; transform: none; }
+}

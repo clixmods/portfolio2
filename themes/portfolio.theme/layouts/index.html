@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{/* Contexte = dict { page, sd } fourni par baseof */}}
+{{ partial "home/hero.html" . }}
+
+{{ partial "home/shortcut-cards.html" . }}
+
+<section class="section">
+  <div class="container">
+    <div class="home-grid">
+      <div class="home-main">
+        {{ partial "home/recent-projects.html" . }}
+      </div>
+      <aside class="home-aside">
+        {{ partial "home/about.html" . }}
+        {{ partial "home/technologies.html" . }}
+      </aside>
+    </div>
+  </div>
+</section>
+
+{{ partial "home/testimonials.html" . }}
+{{ end }}

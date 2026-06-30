@@ -1,0 +1,46 @@
+{{ define "main" }}
+{{- $page := .page -}}
+{{- $items := sort $page.Pages "Params.start_date" "desc" -}}
+<section class="section page-shell">
+  <div class="container">
+    <div class="page-head reveal">
+      <span class="page-kicker">{{ i18n "ui_experiences" }}</span>
+      <h1>{{ $page.Title }}</h1>
+      {{- with $page.Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    </div>
+
+    <div class="timeline">
+      {{- range $items }}
+      {{- $P := .Params -}}
+      {{- $endLabel := i18n "exp_now" }}{{ with $P.end_date }}{{ $endLabel = time.Format "Jan 2006" . }}{{ end }}
+      {{- $tech := slice }}
+      {{- range $P.programming_languages }}{{ $tech = $tech | append . }}{{ end }}
+      {{- range $P.frameworks_engines }}{{ $tech = $tech | append . }}{{ end }}
+      <article class="timeline-item reveal">
+        <div class="timeline-rail"><span class="timeline-marker"></span></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            {{- with $P.logo }}<img class="timeline-logo" src="{{ . | relURL }}" alt="{{ $P.company }}" loading="lazy">{{ end }}
+            <div class="timeline-headings">
+              <div class="timeline-title">{{ .Title }}</div>
+              {{- with $P.company }}<div class="timeline-org">{{ . }}</div>{{ end }}
+              <div class="timeline-sub">
+                {{- with $P.start_date }}<span>🗓 {{ time.Format "Jan 2006" . }} – {{ $endLabel }}</span>{{ end }}
+                {{- with $P.location }}<span>⌖ {{ . }}</span>{{ end }}
+              </div>
+            </div>
+            {{- with $P.contract_type }}<span class="timeline-badge">{{ . }}</span>{{ end }}
+          </div>
+          {{- with $P.description }}<p class="timeline-desc">{{ . }}</p>{{ end }}
+          {{- with $tech }}{{ partial "tech-chips.html" . }}{{ end }}
+          <div class="timeline-foot">
+            {{- with $P.projects }}<span class="tag">{{ len . }} · {{ i18n "exp_projects" }}</span>{{ else }}<span></span>{{ end }}
+            <a class="btn btn-ghost" href="{{ .RelPermalink }}">{{ i18n "exp_view" }} →</a>
+          </div>
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{ end }}

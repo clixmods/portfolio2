@@ -1,0 +1,118 @@
+.hero { padding-top: clamp(28px, 5vw, 52px); }
+
+.hero-plate {
+  @include glass(var(--r-xl));
+  @include glass-sheen;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: stretch;
+  min-height: 440px;
+  background:
+    radial-gradient(80% 120% at 100% 0%, rgba(244, 63, 94, 0.22), transparent 55%),
+    radial-gradient(70% 110% at 0% 100%, rgba(59, 130, 246, 0.18), transparent 55%),
+    var(--glass-bg);
+}
+
+.hero-content {
+  padding: clamp(28px, 4vw, 52px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+}
+
+.hero-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  background: rgba(16, 185, 129, 0.10);
+  border: 1px solid rgba(16, 185, 129, 0.30);
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10d98a;
+    box-shadow: 0 0 0 4px rgba(16, 217, 138, 0.18);
+    animation: pulse 2.2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.hero-sub {
+  font-size: clamp(0.96rem, 1.4vw, 1.1rem);
+  color: var(--text-dim);
+  max-width: 46ch;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+
+  span { display: inline-flex; align-items: center; gap: 7px; }
+  .hero-meta-ico { opacity: 0.8; }
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+// Visuel (photo)
+.hero-visual {
+  position: relative;
+  border-radius: inherit;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 60% at 70% 30%, rgba(59, 130, 246, 0.35), transparent 60%),
+    radial-gradient(60% 60% at 30% 80%, rgba(244, 63, 94, 0.35), transparent 60%),
+    #0a0f1f;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%);
+    mask-image: linear-gradient(90deg, transparent, #000 22%);
+  }
+  // liseré lumineux gauche
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 12%; bottom: 12%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--cyan), var(--warm), transparent);
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 880px) {
+  .hero-plate { grid-template-columns: 1fr; min-height: 0; }
+  .hero-visual { min-height: 280px; order: -1; }
+  .hero-visual img { -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent); mask-image: linear-gradient(180deg, #000 40%, transparent); object-position: center 20%; }
+  .hero-visual::after { display: none; }
+}

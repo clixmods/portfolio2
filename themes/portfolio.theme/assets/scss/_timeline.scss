@@ -1,0 +1,128 @@
+// ─────────────────────────────────────────────────────────
+// Timeline (expériences / formations) — DA glassmorphism
+// ─────────────────────────────────────────────────────────
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 22px;
+}
+
+// Rail + ligne verticale
+.timeline-rail { position: relative; display: flex; justify-content: center; }
+.timeline-rail::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  bottom: calc(-1 * var(--gap) - 4px);
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(180deg, var(--cold), var(--violet) 60%, var(--warm));
+  opacity: 0.35;
+}
+.timeline-item:last-child .timeline-rail::before { display: none; }
+
+.timeline-marker {
+  position: relative;
+  z-index: 1;
+  margin-top: 22px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12), var(--glow-cold);
+}
+
+.timeline-card {
+  @include glass(var(--r-lg));
+  @include glass-sheen;
+  @include hover-lift;
+  padding: clamp(18px, 2.4vw, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.timeline-logo {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-md);
+  object-fit: contain;
+  padding: 7px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+}
+.timeline-headings { flex: 1; min-width: 0; }
+.timeline-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: #fff;
+}
+.timeline-org {
+  font-size: 0.9rem;
+  color: var(--cyan);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.timeline-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  span { display: inline-flex; align-items: center; gap: 6px; }
+}
+
+.timeline-badge {
+  align-self: flex-start;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  color: var(--text-soft);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  &.is-done { color: #6ff0b6; background: rgba(16, 185, 129, 0.10); border-color: rgba(16, 185, 129, 0.30); }
+}
+
+.timeline-desc { font-size: 0.9rem; color: var(--text-soft); }
+
+.timeline-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+// En-tête des pages détail (expérience / formation)
+.exp-hero {
+  margin-bottom: var(--gap);
+  .timeline-title { font-size: clamp(1.6rem, 3.2vw, 2.3rem); }
+  .timeline-logo { width: 68px; height: 68px; }
+}
+
+@media (max-width: 600px) {
+  .timeline-item { grid-template-columns: 0 1fr; gap: 0; }
+  .timeline-rail { display: none; }
+  .timeline-head { flex-wrap: wrap; }
+}

@@ -1,0 +1,73 @@
+{{ define "main" }}
+{{- $page := .page -}}
+
+{{/* Projets de la section (hors sector "test"), triés par date décroissante */}}
+{{- $projects := where $page.RegularPages "Params.sector" "!=" "test" -}}
+{{- $projects = $projects.ByDate.Reverse -}}
+
+{{/* Compteurs par principale ("jv") et par couple principale:sous ("jv:pro") */}}
+{{- $counts := dict "all" (len $projects) -}}
+{{- range $projects -}}
+  {{- $c := partial "project-cats.html" (.Params.sector | default "") -}}
+  {{- $mk := $c.main -}}
+  {{- if $mk -}}
+    {{- $counts = merge $counts (dict $mk (add (int (index $counts $mk | default 0)) 1)) -}}
+    {{- if $c.sub -}}
+      {{- $sk := printf "%s:%s" $mk $c.sub -}}
+      {{- $counts = merge $counts (dict $sk (add (int (index $counts $sk | default 0)) 1)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Définition des filtres */}}
+{{- $mains := slice
+      (dict "key" "all"   "label" (i18n "cat_all"))
+      (dict "key" "jv"    "label" (i18n "cat_jv"))
+      (dict "key" "app"   "label" (i18n "cat_app"))
+      (dict "key" "mods"  "label" (i18n "cat_mods"))
+      (dict "key" "tools" "label" (i18n "cat_tools"))
+-}}
+{{- $subGroups := slice
+      (dict "main" "jv"  "subs" (slice "pro" "perso" "gamejam"))
+      (dict "main" "app" "subs" (slice "pro" "etude"))
+-}}
+
+<section class="section page-shell">
+  <div class="container">
+    <div class="page-head reveal">
+      <span class="page-kicker">{{ i18n "ui_projects" }}</span>
+      <h1>{{ $page.Title }}</h1>
+      {{- with $page.Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    </div>
+
+    <div class="filter-bar reveal" data-project-filter>
+      <div class="filter-mains" role="tablist">
+        {{- range $mains }}
+        {{- if or (eq .key "all") (gt (int (index $counts .key | default 0)) 0) }}
+        <button type="button" class="chip{{ if eq .key "all" }} active{{ end }}" data-main="{{ .key }}">
+          {{ .label }}<span class="chip-count">{{ index $counts .key | default 0 }}</span>
+        </button>
+        {{- end }}
+        {{- end }}
+      </div>
+      {{- range $subGroups }}
+      {{- $mk := .main }}
+      <div class="filter-subs" data-subs-for="{{ $mk }}" hidden>
+        <button type="button" class="subchip active" data-sub="all">{{ i18n "cat_all" }}</button>
+        {{- range .subs }}
+        {{- if gt (int (index $counts (printf "%s:%s" $mk .) | default 0)) 0 }}
+        <button type="button" class="subchip" data-sub="{{ . }}">{{ i18n (printf "sub_%s" .) }}</button>
+        {{- end }}
+        {{- end }}
+      </div>
+      {{- end }}
+    </div>
+
+    <div class="projects-grid">
+      {{- range $projects }}
+      {{ partial "project-card.html" (dict "page" .) }}
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{ end }}

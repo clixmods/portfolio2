@@ -1,0 +1,37 @@
+{
+  "personal": {
+      "firstName": "Clément",
+      "lastName": "GARCIA",
+      "fullName": "Clément 'Clix' GARCIA",
+      "greeting": "Bonjour !",
+      "title": "Développeur logiciel et de jeu vidéo passionné avec une expertise particulière dans les domaines suivants :",
+      "subtitle": "À la recherche d'opportunités pour contribuer à des projets ambitieux et développer mon expertise technique.",
+      "bio": "Développeur polyvalent spécialisé dans les mécaniques de jeu, le design visuel et la production de jeux vidéo. Autodidacte, j'ai débuté en créant des contenus additionnels pour des jeux, ce qui m'a permis d'acquérir une compréhension approfondie des processus de développement. Diplômé d'un BUT IAMSI à l'IUT de Montpellier-Sète et d'un Bachelor Game Developer, j'ai consolidé mes compétences en gestion de projet et en développement technique lors d'une alternance de deux ans chez Studio La Moutarde. Mon objectif : continuer à développer mes compétences techniques et participer à des projets ambitieux dans le jeu vidéo et le développement logiciel."
+    },
+    "media": {
+      "profileImage": "/images/people/clement-garcia.jpg",
+      "resumeFile": "/cv/clement-garcia-cv-couleur.pdf",
+      "resumeFilename": "clement-garcia-cv-couleur.pdf"
+    },
+    "contact": {
+      "email": "clement.g.developer@gmail.com",
+      "phone": "07 67 83 46 09",
+      "linkedin": "linkedin.com/in/clixmods",
+      "github": "https://github.com/clixmods",
+      "discord": "clixmods",
+      "location": "Montpellier",
+      "status": "Disponible pour CDD/CDI/Freelance"
+    },
+    "availability": {
+      "status": "job_seeking",
+      "message": "Disponible immédiatement",
+      "available": true,
+      "nextAvailable": "Immédiatement"
+    },
+    "details": {
+      "formation": "BUT 3 IAMSI - IUT Montpellier-Sète (Diplômé)",
+      "speciality": "Développement C#, Unity, Blazor, FastEndpoint",
+      "experience": "2+ ans de développement professionnel"
+    }
+  
+}

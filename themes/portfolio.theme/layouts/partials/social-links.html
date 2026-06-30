@@ -1,0 +1,13 @@
+{{- /* Liens sociaux depuis data/config.json (SVG inline). Contexte = config */ -}}
+{{- with .social -}}
+<div class="social-links">
+  {{- range . }}
+  {{- if and .url (ne .url "#") }}
+  <a class="social-link" href="{{ .url }}" title="{{ .title }}" aria-label="{{ .title }}"
+     {{ if .external }}target="_blank" rel="noopener noreferrer"{{ end }}>
+    {{ .icon | safeHTML }}
+  </a>
+  {{- end }}
+  {{- end }}
+</div>
+{{- end -}}

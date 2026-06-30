@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.LanguageCode | default .Site.Language.Lang }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "blueprint-bg.html" . }}
+
+  {{- $sd := partial "site-data.html" . -}}
+  {{- $ctx := dict "page" . "sd" $sd -}}
+
+  {{ partial "navbar.html" $ctx }}
+
+  <main>
+    {{ block "main" $ctx }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" $ctx }}
+
+  {{- $js := resources.Get "js/main.js" | minify | fingerprint -}}
+  <script src="{{ $js.RelPermalink }}" defer></script>
+</body>
+</html>

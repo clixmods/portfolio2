@@ -1,0 +1,26 @@
+{{ define "main" }}
+{{- $page := .page -}}
+<section class="section page-shell">
+  <div class="container">
+    <div class="page-head reveal">
+      <span class="page-kicker">{{ $page.Section | humanize }}</span>
+      <h1>{{ $page.Title }}</h1>
+      {{- with $page.Content }}<div class="page-lead prose">{{ . }}</div>{{ end }}
+    </div>
+
+    {{- $items := $page.Pages.ByDate.Reverse }}
+    {{- if $items }}
+    <div class="list-grid">
+      {{- range $items }}
+      <a class="list-item reveal" href="{{ .RelPermalink }}">
+        <h3>{{ .Title }}</h3>
+        {{- with .Params.subtitle }}<p>{{ . }}</p>
+        {{- else }}{{ with .Description }}<p>{{ . | truncate 120 }}</p>{{ end }}{{ end }}
+        {{- with .Date }}<time>{{ .Format "2 Jan 2006" }}</time>{{ end }}
+      </a>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{ end }}

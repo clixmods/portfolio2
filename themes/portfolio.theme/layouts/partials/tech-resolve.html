@@ -1,0 +1,30 @@
+{{- /*
+  Résout une clé techno (lang_* / fw_* / spec_* / skill_* / tool_*) → métadonnées.
+  Contexte = la clé (string). Retourne dict { key, label, iconPath, icon, color, experience }.
+*/ -}}
+{{- $key := . -}}
+{{- $found := dict -}}
+{{- $sources := slice
+      site.Data.programming_languages
+      site.Data.frameworks_engines
+      site.Data.specialties
+      site.Data.soft_skills
+      site.Data.tools -}}
+{{- range $sources -}}
+  {{- range . -}}
+    {{- if eq .key $key -}}{{- $found = . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $iconPath := $found.iconPath -}}
+{{- if $iconPath -}}
+  {{- if not (hasPrefix $iconPath "/") -}}{{- $iconPath = printf "/%s" $iconPath -}}{{- end -}}
+{{- end -}}
+{{- $label := i18n $key -}}
+{{- if not $label -}}{{- $label = $key | replaceRE "^(lang_|fw_|spec_|skill_|tool_)" "" | humanize | title -}}{{- end -}}
+{{- return dict
+      "key" $key
+      "label" $label
+      "iconPath" $iconPath
+      "icon" $found.icon
+      "color" $found.color
+      "experience" $found.experience -}}

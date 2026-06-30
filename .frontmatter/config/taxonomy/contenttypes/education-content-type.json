@@ -1,0 +1,156 @@
+{
+  "$schema": "https://frontmatter.codes/config/taxonomy.contenttypes.schema.json",
+  "name": "education-content-type",
+  "pageBundle": false,
+  "fields": [
+    {
+      "title": "Brouillon",
+      "name": "draft",
+      "type": "draft"
+    },
+    {
+      "title": "Titre de la formation",
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "title": "Institution",
+      "name": "institution",
+      "type": "string"
+    },
+    {
+      "title": "Ville",
+      "name": "city",
+      "type": "string"
+    },
+    {
+      "title": "Date de début",
+      "name": "start_date",
+      "type": "datetime",
+      "description": "Date de début de la formation"
+    },
+    {
+      "title": "Date de fin",
+      "name": "end_date",
+      "type": "datetime",
+      "description": "Date de fin de la formation"
+    },
+    {
+      "title": "Statut",
+      "name": "status",
+      "type": "string"
+    },
+    {
+      "title": "Description",
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "title": "Langages de programmation",
+      "name": "programming_languages",
+      "type": "block",
+      "fieldGroup": [
+        "programming_languages_group"
+      ],
+      "description": "Ajoutez les langages de programmation avec options d'affichage"
+    },
+    {
+      "title": "Frameworks & Moteurs",
+      "name": "frameworks_engines",
+      "type": "block",
+      "fieldGroup": [
+        "frameworks_engines_group"
+      ],
+      "description": "Ajoutez les frameworks et moteurs avec options d'affichage"
+    },
+    {
+      "title": "Spécialités",
+      "name": "specialties",
+      "type": "block",
+      "fieldGroup": [
+        "specialties_group"
+      ],
+      "description": "Ajoutez les spécialités avec options d'affichage"
+    },
+    {
+      "title": "Soft Skills",
+      "name": "soft_skills",
+      "type": "block",
+      "fieldGroup": [
+        "soft_skills_group"
+      ],
+      "description": "Ajoutez les soft skills avec options d'affichage"
+    },
+    {
+      "title": "Outils",
+      "name": "tools",
+      "type": "block",
+      "fieldGroup": [
+        "tools_group"
+      ],
+      "description": "Ajoutez les outils avec options d'affichage"
+    },
+    {
+      "title": "Note/Résultat",
+      "name": "grade",
+      "type": "string"
+    },
+    {
+      "title": "Icône",
+      "name": "icon",
+      "type": "string",
+      "description": "Émoji à utiliser si pas de logo d'école"
+    },
+    {
+      "title": "Logo de l'école",
+      "name": "school_logo",
+      "type": "image",
+      "description": "Logo de l'école (priorité sur l'icône émoji)"
+    },
+    {
+      "title": "Couleur",
+      "name": "color",
+      "type": "string",
+      "description": "Couleur hex (ex: #4fd1c7)"
+    },
+    {
+      "title": "Affiché dans le portfolio",
+      "name": "displayedInPortfolio",
+      "type": "boolean",
+      "default": true,
+      "description": "Cocher pour afficher cette formation dans la timeline du portfolio"
+    },
+    {
+      "title": "fmContentType",
+      "name": "fmContentType",
+      "type": "string"
+    },
+    {
+      "title": "years_detail",
+      "name": "years_detail",
+      "type": "block",
+      "fieldGroup": [
+        "years_detail_group"
+      ]
+    },
+    {
+      "title": "Projets réalisés",
+      "name": "projects",
+      "type": "contentRelationship",
+      "contentTypeName": "project-content-type",
+      "contentTypeValue": "slug",
+      "multiple": true,
+      "description": "Sélectionnez les projets réalisés pendant cette formation"
+    },
+    {
+      "title": "Témoignages",
+      "name": "testimonials",
+      "type": "dataFile",
+      "dataFileId": "testimonials",
+      "dataFileKey": "personId",
+      "dataFileValue": "personId",
+      "multiple": true,
+      "description": "Sélectionnez les témoignages depuis la base de données existante"
+    }
+  ]
+}

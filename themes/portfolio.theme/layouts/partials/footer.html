@@ -1,0 +1,16 @@
+{{- $sd := .sd -}}
+{{- $p := $sd.profile -}}
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner reveal">
+      <div class="footer-brand">
+        {{ $p.personal.fullName }}
+        <span>{{ $p.details.speciality }}</span>
+      </div>
+      {{ partial "social-links.html" $sd.config }}
+      <div class="footer-copy">
+        © {{ now.Year }} {{ $p.personal.fullName }}. {{ i18n "ui_rights_reserved" }}
+      </div>
+    </div>
+  </div>
+</footer>

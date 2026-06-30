@@ -1,0 +1,56 @@
+// ─────────────────────────────────────────────────────────
+// Design tokens — glassmorphism / blueprint
+// ─────────────────────────────────────────────────────────
+:root {
+  // Fonds bleu-nuit
+  --bg:        #080b16;
+  --bg-2:      #05070f;
+  --surface:   #0d1222;
+
+  // Couleur froide (gauche) → chaude (droite)
+  --cold:      #3b82f6; // bleu électrique
+  --cyan:      #38bdf8;
+  --violet:    #8b5cf6; // secondaire
+  --warm:      #f43f5e; // rouge
+  --orange:    #fb7185;
+
+  // Texte
+  --text:      #e8edf5; // blanc cassé
+  --text-soft: #b6c0d4;
+  --text-dim:  #8a96ad; // gris bleuté
+  --text-faint:#5b6680;
+
+  // Verre
+  --glass-bg:      rgba(255, 255, 255, 0.045);
+  --glass-bg-strong: rgba(255, 255, 255, 0.07);
+  --glass-border:  rgba(255, 255, 255, 0.10);
+  --glass-border-hi: rgba(140, 170, 255, 0.30);
+  --glass-blur:    18px;
+
+  // Rayons
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --r-xl: 34px;
+  --r-pill: 999px;
+
+  // Ombres
+  --shadow-soft: 0 18px 50px -20px rgba(0, 0, 0, 0.7);
+  --shadow-card: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+  --glow-cold: 0 0 40px -8px rgba(59, 130, 246, 0.55);
+  --glow-warm: 0 0 40px -8px rgba(244, 63, 94, 0.55);
+
+  // Dégradés
+  --grad-cold: linear-gradient(135deg, var(--cold), var(--cyan));
+  --grad-warm: linear-gradient(135deg, var(--warm), var(--orange));
+  --grad-mix:  linear-gradient(120deg, var(--cyan), var(--violet) 55%, var(--warm));
+
+  // Layout
+  --container: 1200px;
+  --gap: 24px;
+  --nav-h: 72px;
+
+  // Typo
+  --font-head: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}

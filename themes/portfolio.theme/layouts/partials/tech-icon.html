@@ -1,0 +1,11 @@
+{{- /* Rend l'icône d'une techno résolue. Contexte = dict { label, iconPath, icon, color } */ -}}
+{{- $t := . -}}
+<span class="tech-icon">
+  {{- if $t.iconPath -}}
+    <img src="{{ $t.iconPath | relURL }}" alt="{{ $t.label }}" loading="lazy" width="22" height="22">
+  {{- else if $t.icon -}}
+    <span class="tech-emoji">{{ $t.icon }}</span>
+  {{- else -}}
+    <span class="tech-letter"{{ with $t.color }} style="background: {{ . }}"{{ end }}>{{ substr $t.label 0 1 | upper }}</span>
+  {{- end -}}
+</span>

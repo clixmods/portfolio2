@@ -1,0 +1,41 @@
+{{ define "main" }}
+{{- $page := .page -}}
+
+{{/* Catégories de compétences (data/*.json filtrées displayedInPortfolio) */}}
+{{- $cats := slice
+      (dict "title" (i18n "proj_languages")  "sub" false "items" (sort (where site.Data.programming_languages "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "proj_frameworks")  "sub" false "items" (sort (where site.Data.frameworks_engines "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "proj_specialties") "sub" true  "items" (sort (where site.Data.specialties "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "ui_tools")         "sub" false "items" (sort (where site.Data.tools "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "proj_softskills")  "sub" true  "items" (where site.Data.soft_skills "displayedInPortfolio" true))
+-}}
+
+<section class="section page-shell">
+  <div class="container">
+    <div class="page-head reveal">
+      <span class="page-kicker">{{ i18n "ui_skills" }}</span>
+      <h1>{{ $page.Title }}</h1>
+      {{- with $page.Content }}<div class="skills-intro prose">{{ . }}</div>{{ end }}
+    </div>
+
+    <div class="skills-sections">
+      {{- range $cats }}
+      {{- $title := .title }}{{ $sub := .sub }}
+      {{- with .items }}
+      <section class="proj-card reveal">
+        <div class="skills-section-head">
+          <h2 class="proj-section-title">{{ $title }}</h2>
+          <span class="skills-count">{{ len . }}</span>
+        </div>
+        <div class="skills-grid">
+          {{- range . }}
+          {{ partial "skill-card.html" (dict "key" .key "experience" .experience "sub" $sub) }}
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{ end }}

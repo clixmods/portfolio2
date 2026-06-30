@@ -1,0 +1,18 @@
+{{- $sd := .sd -}}
+{{- $p := $sd.profile -}}
+{{- $details := $p.details -}}
+<div class="about-card reveal">
+  <span class="section-eyebrow">{{ i18n "ui_about" }}</span>
+  <p class="about-bio">{{ $p.personal.bio | truncate 320 }}</p>
+  <div class="about-facts">
+    {{- with $details.formation }}
+    <div class="about-fact"><span class="about-fact-ico">🎓</span><span><strong>{{ . }}</strong></span></div>
+    {{- end }}
+    {{- with $details.experience }}
+    <div class="about-fact"><span class="about-fact-ico">⌁</span><span>{{ . }}</span></div>
+    {{- end }}
+    {{- with $p.contact.location }}
+    <div class="about-fact"><span class="about-fact-ico">⌖</span><span>{{ . }}</span></div>
+    {{- end }}
+  </div>
+</div>

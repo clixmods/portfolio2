@@ -1,0 +1,16 @@
+{{- /* Carte de compétence. Contexte = dict { key, experience, sub(bool) }. */ -}}
+{{- $key := .key -}}
+{{- $t := partial "tech-resolve.html" $key -}}
+{{- $exp := .experience -}}
+{{- $sub := "" -}}{{ if .sub }}{{ $sub = i18n (printf "%s_subtitle" $key) }}{{ end }}
+<div class="skill-card{{ if not $exp }} no-bar{{ end }}">
+  {{ partial "tech-icon.html" $t }}
+  <div class="skill-card-body">
+    <div class="skill-card-name">{{ $t.label }}{{ with $sub }}<span class="skill-card-sub">{{ . }}</span>{{ end }}</div>
+    {{- if $exp }}
+    {{- $lvl := math.Min $exp 5 -}}
+    {{- $pct := mul (div $lvl 5.0) 100 -}}
+    <div class="tech-bar"><span style="width: {{ $pct }}%;{{ with $t.color }} background: linear-gradient(135deg, {{ . }}, var(--cyan));{{ end }}"></span></div>
+    {{- end }}
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{{- /* Carte projet réutilisable. Contexte = dict { page, class }. */ -}}
+{{- $p := .page -}}
+{{- $class := .class | default "" -}}
+{{- $cat := partial "project-cats.html" ($p.Params.sector | default "") -}}
+{{- $mainLabel := "" -}}{{- with $cat.main }}{{ $mainLabel = i18n (printf "cat_%s" .) }}{{ end -}}
+{{- $subLabel := "" -}}{{- with $cat.sub }}{{ $subLabel = i18n (printf "sub_%s" .) }}{{ end -}}
+<a class="project-card reveal{{ with $class }} {{ . }}{{ end }}" href="{{ $p.RelPermalink }}"
+   data-project data-main="{{ $cat.main }}" data-sub="{{ $cat.sub }}">
+  <div class="project-thumb">
+    {{- with $p.Params.image }}<img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">{{ end }}
+    {{- if $mainLabel }}<span class="tag project-sector">{{ $mainLabel }}{{ with $subLabel }} · {{ . }}{{ end }}</span>{{ end }}
+  </div>
+  <div class="project-body">
+    <span class="project-title">{{ $p.Title }}</span>
+    <span class="project-desc">{{ with $p.Params.subtitle }}{{ . }}{{ else }}{{ $p.Description }}{{ end }}</span>
+    {{- with $p.Params.tags }}
+    <div class="project-tags">
+      {{- range first 3 . }}<span class="tag">{{ . }}</span>{{ end }}
+    </div>
+    {{- end }}
+  </div>
+</a>

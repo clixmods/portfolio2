@@ -1,0 +1,36 @@
+{{- $langs := where site.Data.programming_languages "displayedInPortfolio" true -}}
+{{- $fws := where site.Data.frameworks_engines "displayedInPortfolio" true -}}
+{{- $primary := sort ($langs | append $fws) "experience" "desc" -}}
+{{- $primary = first 8 $primary -}}
+{{- $tools := first 10 (where site.Data.tools "displayedInPortfolio" true) -}}
+<div class="tech-card reveal">
+  <span class="section-eyebrow">{{ i18n "ui_technologies" }}</span>
+
+  <div class="tech-list">
+    {{- range $primary }}
+    {{- $t := partial "tech-resolve.html" .key -}}
+    {{- $exp := .experience | default 3 -}}
+    {{- $pct := mul (div (float $exp) 5.0) 100 -}}
+    <div class="tech-row">
+      {{ partial "tech-icon.html" $t }}
+      <div class="tech-meta">
+        <div class="tech-name"><span>{{ $t.label }}</span></div>
+        <div class="tech-bar"><span style="width: {{ $pct }}%;{{ with $t.color }} background: linear-gradient(135deg, {{ . }}, var(--cyan));{{ end }}"></span></div>
+      </div>
+    </div>
+    {{- end }}
+  </div>
+
+  {{- with $tools }}
+  <div class="tech-subtitle">{{ i18n "ui_tools" }}</div>
+  <div class="tech-pills">
+    {{- range . }}
+    {{- $t := partial "tech-resolve.html" .key -}}
+    <span class="tech-pill">
+      {{- if $t.iconPath }}<img src="{{ $t.iconPath | relURL }}" alt="" loading="lazy">{{ else if $t.icon }}<span class="tech-emoji">{{ $t.icon }}</span>{{ end -}}
+      {{ $t.label }}
+    </span>
+    {{- end }}
+  </div>
+  {{- end }}
+</div>

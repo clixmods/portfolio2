@@ -1,0 +1,19 @@
+{{- /*
+  Résout les données dépendantes de la langue.
+  FR (racine) lit data/profile.json, data/config.json, data/testimonials.json.
+  EN lit data/en/profile.json + data/en/testimonials.json si présents, sinon repli FR.
+  Retourne un dict { profile, config, testimonials, lang }.
+*/ -}}
+{{- $data := .Site.Data -}}
+{{- $lang := .Site.Language.Lang -}}
+{{- $profile := $data.profile -}}
+{{- $config := $data.config -}}
+{{- $testimonials := $data.testimonials -}}
+{{- if eq $lang "en" -}}
+  {{- with $data.en -}}
+    {{- $profile = or .profile $profile -}}
+    {{- $testimonials = or .testimonials $testimonials -}}
+    {{- $config = or .config $config -}}
+  {{- end -}}
+{{- end -}}
+{{- return dict "profile" $profile "config" $config "testimonials" $testimonials "lang" $lang -}}

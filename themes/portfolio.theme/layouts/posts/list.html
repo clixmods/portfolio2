@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{- $page := .page -}}
+{{- $posts := $page.Pages.ByDate.Reverse -}}
+<section class="section page-shell">
+  <div class="container">
+    <div class="page-head reveal">
+      <span class="page-kicker">{{ i18n "ui_blog" }}</span>
+      <h1>{{ $page.Title }}</h1>
+      {{- with $page.Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    </div>
+
+    {{- with $posts }}
+    <div class="blog-grid">
+      {{- range . }}
+      {{- $post := . -}}
+      <a class="post-card reveal" href="{{ .RelPermalink }}">
+        <div class="post-thumb">
+          {{- with .Params.image }}<img src="{{ . | relURL }}" alt="{{ $post.Title }}" loading="lazy">{{ end }}
+          {{- with .Params.category }}<span class="tag post-cat">{{ . }}</span>{{ end }}
+        </div>
+        <div class="post-body">
+          {{- with .Date }}<time class="post-date">{{ time.Format "2 January 2006" . }}</time>{{ end }}
+          <span class="post-title">{{ .Title }}</span>
+          <p class="post-excerpt">{{ with .Params.subtitle }}{{ . }}{{ else }}{{ .Description | default .Summary }}{{ end }}</p>
+          {{- with .Params.tags }}<div class="post-tags">{{ range first 3 . }}<span class="tag">{{ . }}</span>{{ end }}</div>{{ end }}
+        </div>
+      </a>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{ end }}

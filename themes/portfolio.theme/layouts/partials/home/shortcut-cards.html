@@ -1,0 +1,20 @@
+{{- $arrow := `<svg class="shortcut-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>` -}}
+{{- $cards := slice
+    (dict "url" (relLangURL "/projects/") "ico" "▦" "title" (i18n "ui_projects") "desc" (i18n "ui_card_projects_desc") "cls" "is-cold")
+    (dict "url" (relLangURL "/skills/")   "ico" "⚙" "title" (i18n "ui_skills")   "desc" (i18n "ui_card_skills_desc")   "cls" "is-violet")
+    (dict "url" (relLangURL "/posts/")    "ico" "✎" "title" (i18n "ui_blog")     "desc" (i18n "ui_card_blog_desc")     "cls" "is-warm")
+-}}
+<section class="container">
+  <div class="shortcuts">
+    {{- range $cards }}
+    <a class="shortcut reveal {{ .cls }}" href="{{ .url }}">
+      <span class="shortcut-ico">{{ .ico }}</span>
+      <span class="shortcut-body">
+        <span class="shortcut-title">{{ .title }}</span>
+        <span class="shortcut-desc">{{ .desc }}</span>
+      </span>
+      {{ $arrow | safeHTML }}
+    </a>
+    {{- end }}
+  </div>
+</section>

@@ -1,0 +1,35 @@
+{
+  "personal": {
+    "firstName": "Clément",
+    "lastName": "GARCIA",
+    "fullName": "Clément 'Clix' GARCIA",
+    "greeting": "Hello!",
+    "title": "Passionate software and video game developer with particular expertise in the following areas:",
+    "subtitle": "Looking for opportunities to contribute to ambitious projects and grow on the technical side.",
+    "bio": "Versatile developer specialized in gameplay mechanics, visual design, and game production. Self-taught, I started by creating additional content for games, which gave me a deep understanding of development processes. With a BUT degree in Application Integration and Information Systems Management from IUT Montpellier-Sète and a Bachelor in Game Development, I honed my skills in project management and technical development during a two-year apprenticeship at Studio La Moutarde. My goal: to keep growing technically and contribute to ambitious projects in game development and software engineering."
+  },
+  "media": {
+    "profileImage": "/images/people/clement-garcia.jpg",
+    "resumeFile": "/cv/clement-garcia-cv-couleur.pdf",
+    "resumeFilename": "clement-garcia-cv-couleur.pdf"
+  },
+  "contact": {
+    "email": "clement.g.developer@gmail.com",
+    "phone": "+33 7 67 83 46 09",
+    "linkedin": "linkedin.com/in/clixmods",
+    "github": "https://github.com/clixmods",
+    "location": "Montpellier",
+    "status": "BUT 3 Student - Apprentice at Studio La Moutarde"
+  },
+  "availability": {
+    "status": "job_seeking",
+    "message": "Available immediately",
+    "available": true,
+    "nextAvailable": "Immediately"
+  },
+  "details": {
+    "formation": "BUT 3 IAMSI - IUT Montpellier-Sète",
+    "speciality": "C#, Unity, Blazor, FastEndpoint development",
+    "experience": "2+ years of professional development"
+  }
+}

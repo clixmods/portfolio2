@@ -1,0 +1,213 @@
+{{ define "main" }}
+{{- $page := .page -}}
+{{- $P := $page.Params -}}
+
+{{/* Index des personnes par id (pour les contributeurs) */}}
+{{- $people := dict -}}
+{{- range where site.RegularPages "Section" "people" -}}
+  {{- $pg := . -}}
+  {{- with .Params.id }}{{ $people = merge $people (dict . $pg) }}{{ end -}}
+{{- end -}}
+
+{{/* Badge catégorie (principale · sous) */}}
+{{- $cat := partial "project-cats.html" ($P.sector | default "") -}}
+{{- $catLabel := "" -}}
+{{- with $cat.main }}{{ $catLabel = i18n (printf "cat_%s" .) }}{{ end -}}
+{{- with $cat.sub }}{{ $catLabel = printf "%s · %s" $catLabel (i18n (printf "sub_%s" .)) }}{{ end -}}
+
+{{/* Glyphes d'action */}}
+{{- $gPlay := `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>` -}}
+{{- $gCart := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>` -}}
+{{- $gExt := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>` -}}
+
+<section class="section proj">
+  <div class="container">
+    <a class="proj-back" href="{{ relLangURL "/projects/" }}">← {{ i18n "proj_back" }}</a>
+
+    {{/* ── HERO ── */}}
+    <header class="proj-hero reveal">
+      {{- with $P.image }}<div class="proj-hero-bg"><img src="{{ . | relURL }}" alt="{{ $page.Title }}"></div>{{ end }}
+      <div class="proj-hero-body">
+        {{- if $P.logo }}<img class="proj-logo" src="{{ $P.logo | relURL }}" alt="{{ $page.Title }}">
+        {{- else }}<h1 class="proj-hero-title">{{ $page.Title }}</h1>{{ end }}
+        {{- with $P.subtitle }}<p class="proj-hero-sub">{{ . }}</p>{{ end }}
+        <div class="proj-meta">
+          {{- with $P.status }}<span class="proj-status"><span class="dot"></span>{{ . }}</span>{{ end }}
+          {{- if $catLabel }}<span class="tag">{{ $catLabel }}</span>{{ end }}
+          {{- with $page.Date }}<span class="tag">{{ time.Format "January 2006" . }}</span>{{ end }}
+          {{- range $P.tags }}<span class="tag">{{ . }}</span>{{ end }}
+        </div>
+        {{- with $P.actions }}
+        <div class="proj-actions">
+          {{- range . }}
+          {{- $g := $gExt }}{{ if eq .type "youtube" }}{{ $g = $gPlay }}{{ else if .primary }}{{ $g = $gCart }}{{ end }}
+          <a class="proj-action{{ if .primary }} is-primary{{ end }}" data-type="{{ .type }}" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+            <span class="proj-action-glyph">{{ $g | safeHTML }}</span>{{ .label }}
+          </a>
+          {{- end }}
+        </div>
+        {{- end }}
+      </div>
+    </header>
+
+    {{/* ── FAITS MARQUANTS ── */}}
+    {{- with $P.notable_facts }}
+    <div class="proj-facts">
+      {{- range . }}
+      <div class="proj-fact reveal">
+        <div class="proj-fact-icon">{{ .icon | default "✨" }}</div>
+        <div>
+          <div class="proj-fact-label">{{ .label }}</div>
+          {{- with .value }}<div class="proj-fact-value">{{ . }}</div>{{ end }}
+        </div>
+      </div>
+      {{- end }}
+    </div>
+    {{- end }}
+
+    {{/* ── CONTENU PRINCIPAL + ASIDE ── */}}
+    <div class="proj-layout">
+      <div class="proj-main">
+        {{- with $page.Content }}
+        <article class="proj-card reveal"><div class="prose">{{ . }}</div></article>
+        {{- end }}
+
+        {{/* Galerie */}}
+        {{- range $P.galleries }}
+        {{- with .images }}
+        <section class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_gallery" }}</h2>
+          <div class="proj-gallery">
+            {{- range . }}
+            {{- $u := replace (.url | relURL) " " "%20" }}
+            <a class="proj-gallery-item" data-lightbox href="{{ $u }}">
+              <img src="{{ $u }}" alt="{{ .caption }}" loading="lazy">
+            </a>
+            {{- end }}
+          </div>
+        </section>
+        {{- end }}
+        {{- end }}
+
+        {{/* Vidéos YouTube (singles + galeries, dédoublonnées) */}}
+        {{- $videos := slice }}{{ $seen := slice }}
+        {{- range $P.youtube_singles }}{{ if not (in $seen .video_id) }}{{ $videos = $videos | append (dict "id" .video_id "title" .video_title) }}{{ $seen = $seen | append .video_id }}{{ end }}{{ end }}
+        {{- range $P.youtube_galleries }}{{ range .videos }}{{ if not (in $seen .video_id) }}{{ $videos = $videos | append (dict "id" .video_id "title" .title) }}{{ $seen = $seen | append .video_id }}{{ end }}{{ end }}{{ end }}
+        {{- with $videos }}
+        <section class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_videos" }}</h2>
+          <div class="proj-videos">
+            {{- range . }}
+            <div class="proj-video">
+              <div class="proj-video-frame">
+                <iframe src="https://www.youtube-nocookie.com/embed/{{ .id }}" title="{{ .title }}" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              </div>
+              {{- with .title }}<div class="proj-video-title">{{ . }}</div>{{ end }}
+            </div>
+            {{- end }}
+          </div>
+        </section>
+        {{- end }}
+
+        {{/* Équipe / contributeurs */}}
+        {{- with $P.contributors }}
+        <section class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_team" }}</h2>
+          <div class="contributors-grid">
+            {{- range . }}
+            {{- $pid := .person | default "" -}}
+            {{- $person := false }}{{ if $pid }}{{ $person = index $people $pid }}{{ end -}}
+            {{- $isMe := eq $pid "clement-garcia" -}}
+            {{- $avatar := "/images/avatar6-8.svg" -}}{{- $name := "" -}}
+            {{- with $person }}{{ $name = .Title }}{{ with .Params.avatar }}{{ $avatar = . }}{{ end }}
+            {{- else }}{{ $name = .name | default ($pid | humanize | title) }}{{ end -}}
+            {{- $roles := .roles }}{{ if and (not $roles) .role }}{{ $roles = slice .role }}{{ end -}}
+            <div class="contributor{{ if $isMe }} is-me{{ end }}">
+              <img class="contributor-avatar" src="{{ $avatar | relURL }}" alt="{{ $name }}" loading="lazy">
+              <div>
+                <div class="contributor-name">{{ $name }}{{ if $isMe }}<span class="contributor-me">{{ i18n "proj_you" }}</span>{{ end }}</div>
+                <div class="contributor-roles">{{ with $roles }}{{ delimit . ", " }}{{ end }}</div>
+              </div>
+            </div>
+            {{- end }}
+          </div>
+        </section>
+        {{- end }}
+      </div>
+
+      {{/* ── ASIDE ── */}}
+      <aside class="proj-aside">
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_info" }}</h2>
+          {{- with $P.status }}<div class="proj-info-row"><span>{{ i18n "proj_status" }}</span><span>{{ . }}</span></div>{{ end }}
+          {{- with $page.Date }}<div class="proj-info-row"><span>{{ i18n "proj_date" }}</span><span>{{ time.Format "2 January 2006" . }}</span></div>{{ end }}
+          {{- if $catLabel }}<div class="proj-info-row"><span>{{ i18n "proj_category" }}</span><span>{{ $catLabel }}</span></div>{{ end }}
+        </div>
+
+        {{- if or $P.programming_languages $P.frameworks_engines $P.tools }}
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_stack" }}</h2>
+          {{- with $P.programming_languages }}
+          <div class="proj-stack-group">
+            <div class="proj-stack-label">{{ i18n "proj_languages" }}</div>
+            <div class="proj-chips">
+              {{- range . }}{{ $t := partial "tech-resolve.html" . }}
+              <span class="proj-chip">{{ if $t.iconPath }}<img class="proj-chip-ico" src="{{ $t.iconPath | relURL }}" alt="" width="16" height="16" loading="lazy">{{ else }}{{ with $t.icon }}<span class="proj-chip-ico">{{ . }}</span>{{ end }}{{ end }}{{ $t.label }}</span>
+              {{- end }}
+            </div>
+          </div>
+          {{- end }}
+          {{- with $P.frameworks_engines }}
+          <div class="proj-stack-group">
+            <div class="proj-stack-label">{{ i18n "proj_frameworks" }}</div>
+            <div class="proj-chips">
+              {{- range . }}{{ $t := partial "tech-resolve.html" . }}
+              <span class="proj-chip">{{ if $t.iconPath }}<img class="proj-chip-ico" src="{{ $t.iconPath | relURL }}" alt="" width="16" height="16" loading="lazy">{{ else }}{{ with $t.icon }}<span class="proj-chip-ico">{{ . }}</span>{{ end }}{{ end }}{{ $t.label }}</span>
+              {{- end }}
+            </div>
+          </div>
+          {{- end }}
+          {{- with $P.tools }}
+          <div class="proj-stack-group">
+            <div class="proj-stack-label">{{ i18n "proj_tools" }}</div>
+            <div class="proj-chips">
+              {{- range . }}{{ $t := partial "tech-resolve.html" . }}
+              <span class="proj-chip">{{ if $t.iconPath }}<img class="proj-chip-ico" src="{{ $t.iconPath | relURL }}" alt="" width="16" height="16" loading="lazy">{{ else }}{{ with $t.icon }}<span class="proj-chip-ico">{{ . }}</span>{{ end }}{{ end }}{{ $t.label }}</span>
+              {{- end }}
+            </div>
+          </div>
+          {{- end }}
+        </div>
+        {{- end }}
+
+        {{- with $P.specialties }}
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_specialties" }}</h2>
+          <div class="proj-chips">
+            {{- range . }}{{ $sub := i18n (printf "%s_subtitle" .) }}
+            <span class="proj-chip">{{ i18n . }}{{ with $sub }} <small>{{ . }}</small>{{ end }}</span>
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
+
+        {{- with $P.soft_skills }}
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_softskills" }}</h2>
+          <div class="proj-chips">
+            {{- range . }}{{ $t := partial "tech-resolve.html" . }}
+            <span class="proj-chip">{{ with $t.icon }}<span class="proj-chip-ico">{{ . }}</span>{{ end }}{{ $t.label }}</span>
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" data-lightbox-overlay>
+  <span class="lightbox-close" aria-label="Fermer">✕</span>
+  <img src="" alt="">
+</div>
+{{ end }}

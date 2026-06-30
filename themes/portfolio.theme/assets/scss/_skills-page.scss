@@ -1,0 +1,104 @@
+// ─────────────────────────────────────────────────────────
+// Page Compétences — sections par catégorie + cartes de skill
+// (réutilise .proj-card, .proj-section-title, .tech-bar, .tech-icon)
+// ─────────────────────────────────────────────────────────
+// Intro (corps Markdown du _index) — le H1 répète le titre → masqué
+.skills-intro {
+  margin-top: 12px;
+  max-width: 65ch;
+  color: var(--text-dim);
+  > h1:first-child { display: none; }
+  p { margin: 0; }
+}
+
+.skills-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+// En-tête de section avec compteur
+.skills-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+
+  .proj-section-title { margin-bottom: 0; }
+  .skills-count {
+    font-family: var(--font-head);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    padding: 4px 11px;
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+  }
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.skill-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+
+  &:hover {
+    border-color: var(--glass-border-hi);
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  // icône (sortie par tech-icon.html → .tech-icon)
+  .tech-icon {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border-radius: var(--r-sm);
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    img { width: 22px; height: 22px; object-fit: contain; }
+    .tech-emoji { font-size: 1.15rem; }
+    .tech-letter { width: 24px; height: 24px; border-radius: 7px; font-size: 0.72rem; }
+  }
+
+  .skill-card-body { flex: 1; min-width: 0; }
+
+  .skill-card-name {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #fff;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .skill-card-sub {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.74rem;
+    color: var(--text-dim);
+  }
+
+  // barre de niveau (réutilise .tech-bar mais avec une marge)
+  .tech-bar { margin-top: 8px; }
+}
+
+// Variante sans barre (soft skills) : centrage vertical propre
+.skill-card.no-bar .skill-card-name { margin: 0; }
+
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+}

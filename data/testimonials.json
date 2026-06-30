@@ -1,0 +1,68 @@
+[
+  {
+    "personId": "francois-bertrand",
+    "company": "La Moutarde",
+    "position": "Co-fondateur / Directeur de jeu",
+    "text": "Clément s’est rapidement imposé comme un élément moteur de notre équipe. Son sens de l’initiative est particulièrement remarquable : il n’hésite pas à aller au-delà des tâches qui lui sont confiées pour suggérer des améliorations et optimiser nos processus. En plus d’être un excellent développeur, Clément fait preuve d’une écoute attentive et d’une grande capacité d’adaptation. Son implication et son envie de progresser font de lui un collaborateur de grande valeur, apprécié tant par ses collègues que par la direction. "
+  },
+  {
+    "personId": "anthony-expert",
+    "company": "La Moutarde",
+    "position": "Co-fondateur / Directeur Artistique",
+    "text": "J’ai eu la chance de travailler avec Clément durant son alternance au sein de notre équipe. Il s’est rapidement intégré et a montré une grande autonomie, une vraie capacité d’adaptation ainsi qu’une excellente maîtrise d'Unity. Il m’a souvent surpris par la qualité de son travail au point de me faire oublier qu’il était encore alternant. Son absence se faisait toujours sentir lorsqu’il était en cours, preuve de l’impact positif qu’il avait au quotidien. Toujours volontaire, curieux et impliqué, il a su apporter des solutions concrètes et efficaces aux projets sur lesquels il est intervenu. Son sérieux et sa motivation en font un collaborateur de confiance que je recommande vivement."
+  },
+  {
+    "personId": "mony-cazamea",
+    "company": "La Moutarde",
+    "position": "Artiste",
+    "text": "J'ai eu le plaisir de travailler régulièrement aux côtés de Clément chez La Moutarde. Mes compétences étant dans un domaine différent, je ne pourrais juger de ses aptitudes en dev. Mais en tant que coéquipier, Clément est quelqu'un de très agréable à côtoyer : sérieux, professionnel et toujours impliqué dans ses missions. Il sait aussi apporter une touche de bonne humeur et d’humour au quotidien. Il est rigoureux et curieux, il ne rechigne pas face à la critique et s'améliore chaque jour. Je retravaillerai avec lui avec plaisir si nos chemins se croisent !"
+  },
+  {
+    "personId": "antoine-chollet",
+    "company": "Université de Montpellier",
+    "position": "Maître de Conférences en Sciences de Gestion",
+    "text": "Clément a été mon étudiant en BUT Informatique à l'Université de Montpellier. Après être arrivé en 2e année, il a su se donner les moyens pour réussir. En tant qu'alternant dans le secteur du jeu vidéo durant ses études, Clément a su montrer sa détermination et sa passion. Bravo pour ta persévérance et hâte de voir ton évolution !"
+  },
+  {
+    "personId": "gaetan-vergeot",
+    "company": "UGU",
+    "position": "Game Developer & Teacher",
+    "text": "Dès le début de sa deuxième année d'études où j'ai été son prof de Développement Unity, j'ai pu constater que Clément était impliqué et avait des réflexes importants quand on cherche à devenir développeur : une bonne curiosité et une capacité de recherche qui l'aide à trouver ses réponses. Clément était aussi quelqu'un d'autonome qui essaye des choses à chaque projet sans trop se reposer sur ses acquis."
+  },
+  {
+    "personId": "lucas-guibert",
+    "company": "e-artsup Montpellier",
+    "position": "Game Programmer / Technical Designer",
+    "text": "J'ai eu l'occasion de suivre le travail de Clément durant toute sa seconde année d'études, en tant qu'intervenant en programmation. J'y ai découvert un développeur curieux et passionné par son travail, qui avait toujours une petite longueur d'avance sur les sujets étudiés. Il a brillamment su alterner entre développement gameplay, rendu et outils selon les besoins des projets et de l'équipe. Clément a toutes les chances de son côté, et je suis persuadé qu'il ira loin !"
+  },
+  {
+    "personId": "benoit-toupet",
+    "company": "e-artsup Montpellier",
+    "position": "Ancien Directeur",
+    "text": "J’ai eu la chance de compter Clément Garcia parmi nos étudiants d’e-artsup à l’époque où j’en étais directeur. Consciencieux, disponible, réactif, très agréable il s’est montré indispensable aux seins des équipes dans lesquels il a souvent été “lead”."
+  },
+  {
+    "personId": "jesse-moody",
+    "company": "Call of Duty Franchise",
+    "position": "Hard Surface Specialist",
+    "text": "J'ai l'impression d'avoir travaillé sur la version originale il y a des années. Beau travail pour la mise à jour de la map Farm !"
+  },
+  {
+    "personId": "mike-curran",
+    "company": "Treyarch",
+    "position": "Senior Character Artist",
+    "text": "Excellent travail pour le remaster de Nuketown Zombies !"
+  },
+  {
+    "personId": "anita-messaoui",
+    "company": "IUT de Montpellier-Sète",
+    "position": "MCF en sciences de l’éducation et de la formation",
+    "text": "Durant les deux années où je l’ai eu en classe, j’ai pu observer son évolution et ses efforts constants pour développer ses compétences, tant sur le plan académique que personnel. Clément se distingue par une réelle motivation et un intérêt concret pour la communication et le travail en équipe. Il a démontré une capacité à s’impliquer activement dans les projets collectifs, notamment lors du projet collectif de BUT 2."
+  },
+  {
+    "personId": "francis-garcia",
+    "company": "IUT Informatique Montpellier",
+    "position": "Professeur Ensam Informatique",
+    "text": "Clément GARCIA, [...] un élève très sérieux, très appliqué et très assidu. Les résultats, obtenus depuis le début de sa scolarité en BUT, ont été au-dessus de la moyenne dans la plupart des unités d’enseignement. Particulièrement à l’aise dans les matières informatiques et plus précisément en système, réseaux et sécurité, dont je suis responsable."
+  }
+]

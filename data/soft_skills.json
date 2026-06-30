@@ -1,0 +1,65 @@
+[
+  {
+    "key": "skill_gestion_de_projet",
+    "icon": "📋",
+    "iconPath": null,
+    "color": "#4CAF50",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_leadership",
+    "icon": "👑",
+    "iconPath": null,
+    "color": "#FF9800",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_management_communaute",
+    "icon": "👥",
+    "iconPath": null,
+    "color": "#2196F3",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_communication",
+    "icon": "💬",
+    "iconPath": null,
+    "color": "#9C27B0",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_resolution_problemes",
+    "icon": "🔍",
+    "iconPath": null,
+    "color": "#FF5722",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_visionvisualisation",
+    "icon": "👁️",
+    "iconPath": null,
+    "color": "#607D8B",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_travail_en_equipe",
+    "icon": "🤝",
+    "iconPath": null,
+    "color": "#00BCD4",
+    "displayedInPortfolio": true
+  },
+  {
+    "key": "skill_creativite",
+    "icon": "💡",
+    "iconPath": null,
+    "color": "#E91E63",
+    "displayedInPortfolio": false
+  },
+  {
+    "key": "skill_analyse_critique",
+    "icon": "🎯",
+    "iconPath": null,
+    "color": "#673AB7",
+    "displayedInPortfolio": false
+  }
+]

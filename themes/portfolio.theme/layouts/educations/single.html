@@ -1,0 +1,111 @@
+{{ define "main" }}
+{{- $page := .page -}}
+{{- $P := $page.Params -}}
+{{- $sd := .sd -}}
+{{- $endLabel := i18n "exp_now" }}{{ with $P.end_date }}{{ $endLabel = time.Format "Jan 2006" . }}{{ end }}
+{{- $status := $P.status | default $P.grade -}}
+
+{{/* Extraction des clés tech (forme objets pour les formations) */}}
+{{- $langs := slice }}{{ range $P.programming_languages }}{{ $langs = $langs | append .language }}{{ end }}
+{{- $fws := slice }}{{ range $P.frameworks_engines }}{{ $fws = $fws | append .framework }}{{ end }}
+{{- $specs := slice }}{{ range $P.specialties }}{{ $specs = $specs | append .specialty }}{{ end }}
+{{- $skills := slice }}{{ range $P.soft_skills }}{{ $skills = $skills | append .skill }}{{ end }}
+
+{{/* Maps personnes + témoignages */}}
+{{- $people := dict }}{{ range where site.RegularPages "Section" "people" }}{{ $pg := . }}{{ with .Params.id }}{{ $people = merge $people (dict . $pg) }}{{ end }}{{ end }}
+{{- $tmap := dict }}{{ range $sd.testimonials }}{{ $tmap = merge $tmap (dict .personId .) }}{{ end }}
+
+<section class="section proj">
+  <div class="container">
+    <a class="proj-back" href="{{ relLangURL "/educations/" }}">← {{ i18n "back_educations" }}</a>
+
+    <header class="proj-card reveal exp-hero">
+      <div class="timeline-head">
+        {{- with $P.school_logo }}<img class="timeline-logo" src="{{ . | relURL }}" alt="{{ $P.institution }}">{{ end }}
+        <div class="timeline-headings">
+          <h1 class="timeline-title">{{ $page.Title }}</h1>
+          {{- with $P.institution }}<div class="timeline-org">{{ . }}</div>{{ end }}
+          <div class="timeline-sub">
+            {{- with $P.start_date }}<span>🗓 {{ time.Format "Jan 2006" . }} – {{ $endLabel }}</span>{{ end }}
+            {{- with $P.city }}<span>⌖ {{ . }}</span>{{ end }}
+            {{- with $status }}<span class="timeline-badge is-done">{{ . }}</span>{{ end }}
+          </div>
+        </div>
+      </div>
+      {{- with $P.description }}<p class="timeline-desc" style="margin-top:14px">{{ . }}</p>{{ end }}
+    </header>
+
+    <div class="proj-layout">
+      <div class="proj-main">
+        {{- with $page.Content }}<article class="proj-card reveal"><div class="prose">{{ . }}</div></article>{{ end }}
+
+        {{- with $P.projects }}
+        <section class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "exp_projects" }}</h2>
+          <div class="projects-grid">
+            {{- range . }}
+            {{- $proj := site.GetPage (printf "/projects/%s" .) -}}
+            {{- with $proj }}{{ partial "project-card.html" (dict "page" .) }}{{ end }}
+            {{- end }}
+          </div>
+        </section>
+        {{- end }}
+
+        {{- with $P.testimonials }}
+        <section class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "ui_testimonials" }}</h2>
+          <div class="testimonials-grid">
+            {{- range . }}
+            {{- $t := index $tmap . }}{{ $person := index $people . }}
+            {{- if $t }}
+            <figure class="testimonial">
+              <blockquote class="testimonial-quote">{{ $t.text | truncate 240 }}</blockquote>
+              <figcaption class="testimonial-author">
+                {{- with $person }}{{ with .Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="lazy">{{ end }}{{ end }}
+                <span>
+                  <span class="testimonial-name">{{ with $person }}{{ .Title }}{{ else }}{{ $t.personId }}{{ end }}</span>
+                  <span class="testimonial-role">{{ $t.position }}{{ with $t.company }} · {{ . }}{{ end }}</span>
+                </span>
+              </figcaption>
+            </figure>
+            {{- end }}
+            {{- end }}
+          </div>
+        </section>
+        {{- end }}
+      </div>
+
+      <aside class="proj-aside">
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_info" }}</h2>
+          {{- with $P.start_date }}<div class="proj-info-row"><span>{{ i18n "exp_period" }}</span><span>{{ time.Format "Jan 2006" . }} – {{ $endLabel }}</span></div>{{ end }}
+          {{- with $P.city }}<div class="proj-info-row"><span>{{ i18n "exp_location" }}</span><span>{{ . }}</span></div>{{ end }}
+          {{- with $status }}<div class="proj-info-row"><span>{{ i18n "edu_status" }}</span><span>{{ . }}</span></div>{{ end }}
+        </div>
+
+        {{- if or $langs $fws }}
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_stack" }}</h2>
+          {{- with $langs }}<div class="proj-stack-group"><div class="proj-stack-label">{{ i18n "proj_languages" }}</div>{{ partial "tech-chips.html" . }}</div>{{ end }}
+          {{- with $fws }}<div class="proj-stack-group"><div class="proj-stack-label">{{ i18n "proj_frameworks" }}</div>{{ partial "tech-chips.html" . }}</div>{{ end }}
+        </div>
+        {{- end }}
+
+        {{- with $specs }}
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_specialties" }}</h2>
+          <div class="proj-chips">{{ range . }}{{ $sub := i18n (printf "%s_subtitle" .) }}<span class="proj-chip">{{ i18n . }}{{ with $sub }} <small>{{ . }}</small>{{ end }}</span>{{ end }}</div>
+        </div>
+        {{- end }}
+
+        {{- with $skills }}
+        <div class="proj-card reveal">
+          <h2 class="proj-section-title">{{ i18n "proj_softskills" }}</h2>
+          {{ partial "tech-chips.html" . }}
+        </div>
+        {{- end }}
+      </aside>
+    </div>
+  </div>
+</section>
+{{ end }}

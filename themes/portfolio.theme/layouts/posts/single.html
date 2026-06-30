@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{- $page := .page -}}
+{{- $P := $page.Params -}}
+<section class="section">
+  <div class="container">
+    <article class="article">
+      <a class="proj-back" href="{{ relLangURL "/posts/" }}">← {{ i18n "back_blog" }}</a>
+
+      {{- with $P.image }}<div class="article-hero"><img src="{{ . | relURL }}" alt="{{ $page.Title }}"></div>{{ end }}
+
+      <header class="article-head">
+        <div class="article-meta">
+          {{- with $P.category }}<span class="tag">{{ . }}</span>{{ end }}
+          {{- with $page.Date }}<span>{{ time.Format "2 January 2006" . }}</span>{{ end }}
+          {{- if $page.ReadingTime }}<span>· {{ $page.ReadingTime }} {{ i18n "blog_min" }}</span>{{ end }}
+        </div>
+        <h1 class="article-title">{{ $page.Title }}</h1>
+        {{- with $P.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
+      </header>
+
+      <div class="article-body"><div class="prose">{{ $page.Content }}</div></div>
+
+      {{- with $P.tags }}
+      <div class="article-tags">{{ range . }}<span class="tag">{{ . }}</span>{{ end }}</div>
+      {{- end }}
+    </article>
+  </div>
+</section>
+{{ end }}

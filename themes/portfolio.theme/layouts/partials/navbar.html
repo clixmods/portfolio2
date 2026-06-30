@@ -1,0 +1,57 @@
+{{- $page := .page -}}
+{{- $sd := .sd -}}
+{{- $p := $sd.profile -}}
+{{- $personal := $p.personal -}}
+{{- $nav := slice
+    (dict "url" (relLangURL "/")            "key" "ui_home"    "ico" "◇")
+    (dict "url" (relLangURL "/projects/")    "key" "ui_projects" "ico" "▢")
+    (dict "url" (relLangURL "/skills/")      "key" "ui_skills"   "ico" "✦")
+    (dict "url" (relLangURL "/posts/")       "key" "ui_blog"     "ico" "✎")
+    (dict "url" (relLangURL "/experiences/") "key" "ui_experiences" "ico" "◈")
+    (dict "url" (relLangURL "/educations/")  "key" "ui_educations"  "ico" "❖")
+-}}
+
+<div class="nav-wrap">
+  <div class="container">
+    <nav class="navbar" data-navbar>
+      <a class="nav-brand" href="{{ relLangURL "/" }}">
+        {{- with $p.media.profileImage }}<img src="{{ . | relURL }}" alt="{{ $personal.fullName }}" loading="eager" width="40" height="40">{{ end }}
+        <span>
+          <span class="nav-brand-name">{{ upper $personal.firstName }} {{ upper $personal.lastName }}</span>
+          <span class="nav-brand-role">{{ $p.details.speciality }}</span>
+        </span>
+      </a>
+
+      <div class="nav-links">
+        {{- range $nav }}
+        <a href="{{ .url }}"><span class="nav-ico">{{ .ico }}</span>{{ i18n .key }}</a>
+        {{- end }}
+      </div>
+
+      <div class="nav-actions">
+        {{- if gt (len $page.AllTranslations) 0 }}
+        <span class="lang-switch">
+          {{- range $page.AllTranslations }}
+          <a href="{{ .RelPermalink }}" class="{{ if eq .Language.Lang $page.Site.Language.Lang }}active{{ end }}">{{ upper .Language.Lang }}</a>
+          {{- end }}
+        </span>
+        {{- end }}
+        {{- with $p.media.resumeFile }}
+        <a class="btn btn-warm" href="{{ . | relURL }}" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          {{ i18n "ui_download_cv" }}
+        </a>
+        {{- end }}
+        <button class="nav-burger" data-burger aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="mobile-menu" data-mobile-menu>
+  {{- range $nav }}
+  <a href="{{ .url }}"><span class="nav-ico">{{ .ico }}</span>{{ i18n .key }}</a>
+  {{- end }}
+</div>

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "welcome",
+    "name": "Bienvenue !",
+    "description": "Visitez la page d'accueil pour la première fois",
+    "icon": "🏠",
+    "rarity": "common",
+    "requirement": "Visiter la page d'accueil",
+    "category": "exploration",
+    "points": 10,
+    "enabled": true,
+    "order": 1,
+    "condition_type": "page_visit",
+    "condition_data": {
+      "paths": ["/", "/portfolio/", "index"]
+    }
+  },
+  {
+    "id": "portfolio_explorer",
+    "name": "Explorateur de Portfolio",
+    "description": "Explorer toute la page d'accueil",
+    "icon": "💼",
+    "rarity": "common",
+    "requirement": "Atteindre le bas de la page d'accueil",
+    "category": "exploration",
+    "points": 10,
+    "enabled": true,
+    "order": 2,
+    "condition_type": "scrolled_to_bottom",
+    "condition_data": {
+      "page": "home"
+    }
+  },
+  {
+    "id": "project_enthusiast",
+    "name": "Amateur de Projets",
+    "description": "Consultez 3 projets différents",
+    "icon": "🚀",
+    "rarity": "rare",
+    "requirement": "Visiter 3 projets différents",
+    "category": "engagement",
+    "points": 25,
+    "enabled": true,
+    "order": 3,
+    "condition_type": "visited_count",
+    "condition_data": {
+      "storage_key": "visitedProjects",
+      "min_count": 3
+    }
+  },
+  {
+    "id": "blog_reader",
+    "name": "Lecteur Assidu",
+    "description": "Lisez un article de blog",
+    "icon": "📚",
+    "rarity": "common",
+    "requirement": "Lire un article de blog",
+    "category": "content",
+    "points": 15,
+    "enabled": true,
+    "order": 4,
+    "condition_type": "page_visit",
+    "condition_data": {
+      "paths": ["/posts/"],
+      "exclude_paths": ["/posts/"]
+    }
+  },
+  {
+    "id": "night_owl",
+    "name": "Oiseau de Nuit",
+    "description": "Activez le mode sombre",
+    "icon": "🌙",
+    "rarity": "common",
+    "requirement": "Activer le mode sombre",
+    "category": "interaction",
+    "points": 10,
+    "enabled": false,
+    "order": 5,
+    "condition_type": "theme_change",
+    "condition_data": {
+      "theme": "dark"
+    }
+  },
+  {
+    "id": "time_keeper",
+    "name": "Gardien du Temps",
+    "description": "Restez sur le site pendant plus de 5 minutes",
+    "icon": "⏰",
+    "rarity": "rare",
+    "requirement": "Rester 5+ minutes sur le site",
+    "category": "engagement",
+    "points": 30,
+    "enabled": true,
+    "order": 6,
+    "condition_type": "time_spent",
+    "condition_data": {
+      "min_minutes": 5
+    }
+  },
+  {
+    "id": "cv_downloader",
+    "name": "Recruteur Potentiel",
+    "description": "Téléchargez le CV",
+    "icon": "📄",
+    "rarity": "rare",
+    "requirement": "Télécharger le CV",
+    "category": "action",
+    "points": 25,
+    "enabled": true,
+    "order": 7,
+    "condition_type": "action_performed",
+    "condition_data": {
+      "action": "cvDownloaded"
+    }
+  },
+  {
+    "id": "social_networker",
+    "name": "Social Butterfly",
+    "description": "Cliquez sur 2 liens de réseaux sociaux différents",
+    "icon": "🦋",
+    "rarity": "rare",
+    "requirement": "Visiter 2 réseaux sociaux",
+    "category": "social",
+    "points": 20,
+    "enabled": true,
+    "order": 8,
+    "condition_type": "visited_count",
+    "condition_data": {
+      "storage_key": "socialClicks",
+      "min_count": 2
+    }
+  },
+  {
+    "id": "technology_explorer",
+    "name": "Explorateur de Technologies",
+    "description": "Ouvrez la modal d'une compétence technique",
+    "icon": "🔧",
+    "rarity": "common",
+    "requirement": "Ouvrir une modal de compétence",
+    "category": "interaction",
+    "points": 15,
+    "enabled": true,
+    "order": 9,
+    "condition_type": "skill_modal_opened",
+    "condition_data": {}
+  },
+  {
+    "id": "completionist",
+    "name": "Perfectionniste",
+    "description": "Visitez toutes les sections du site",
+    "icon": "🏆",
+    "rarity": "epic",
+    "requirement": "Visiter toutes les sections",
+    "category": "achievement",
+    "points": 50,
+    "enabled": true,
+    "order": 10,
+    "condition_type": "all_sections_visited",
+    "condition_data": {
+      "required_sections": ["home", "skills", "projects", "posts", "educations", "experiences"]
+    }
+  },
+  {
+    "id": "master_explorer",
+    "name": "Maître Explorateur",
+    "description": "Débloquez tous les autres trophées",
+    "icon": "👑",
+    "rarity": "legendary",
+    "requirement": "Débloquer tous les trophées",
+    "category": "achievement",
+    "points": 100,
+    "enabled": true,
+    "order": 11,
+    "condition_type": "all_trophies_unlocked",
+    "condition_data": {}
+  },
+  {
+    "id": "speed_runner",
+    "name": "Visiteur Éclair",
+    "description": "Visitez 5 pages en moins de 2 minutes",
+    "icon": "⚡",
+    "rarity": "rare",
+    "requirement": "Navigation rapide",
+    "category": "speed",
+    "points": 30,
+    "enabled": true,
+    "order": 12,
+    "condition_type": "speed_navigation",
+    "condition_data": {
+      "min_pages": 5,
+      "max_minutes": 2
+    }
+  }
+]
