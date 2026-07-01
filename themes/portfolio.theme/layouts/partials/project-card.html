@@ -4,8 +4,20 @@
 {{- $cat := partial "project-cats.html" ($p.Params.sector | default "") -}}
 {{- $mainLabel := "" -}}{{- with $cat.main }}{{ $mainLabel = i18n (printf "cat_%s" .) }}{{ end -}}
 {{- $subLabel := "" -}}{{- with $cat.sub }}{{ $subLabel = i18n (printf "sub_%s" .) }}{{ end -}}
+
+{{/* Technos : langages + frameworks (affichage) ; +outils (data-tech) */}}
+{{- $langs := $p.Params.programming_languages -}}
+{{- $fws := $p.Params.frameworks_engines -}}
+{{- $tools := $p.Params.tools -}}
+{{- $display := slice -}}
+{{- with $langs }}{{ $display = $display | append . }}{{ end -}}
+{{- with $fws }}{{ $display = $display | append . }}{{ end -}}
+{{- $allTech := $display -}}
+{{- with $tools }}{{ $allTech = $allTech | append . }}{{ end -}}
+{{- $display = first 4 $display -}}
+
 <a class="project-card reveal{{ with $class }} {{ . }}{{ end }}" href="{{ $p.RelPermalink }}"
-   data-project data-main="{{ $cat.main }}" data-sub="{{ $cat.sub }}">
+   data-project data-main="{{ $cat.main }}" data-sub="{{ $cat.sub }}" data-tech="{{ delimit $allTech " " }}">
   <div class="project-thumb">
     {{- with $p.Params.image }}<img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">{{ end }}
     {{- if $mainLabel }}<span class="tag project-sector">{{ $mainLabel }}{{ with $subLabel }} · {{ . }}{{ end }}</span>{{ end }}
@@ -13,9 +25,12 @@
   <div class="project-body">
     <span class="project-title">{{ $p.Title }}</span>
     <span class="project-desc">{{ with $p.Params.subtitle }}{{ . }}{{ else }}{{ $p.Description }}{{ end }}</span>
-    {{- with $p.Params.tags }}
+    {{- with $display }}
     <div class="project-tags">
-      {{- range first 3 . }}<span class="tag">{{ . }}</span>{{ end }}
+      {{- range . }}
+      {{- $t := partial "tech-resolve.html" . }}
+      <span class="tag tag-tech">{{ if $t.iconPath }}<img src="{{ $t.iconPath | relURL }}" alt="" width="14" height="14" loading="lazy">{{ else }}{{ with $t.icon }}<span class="tag-tech-emoji">{{ . }}</span>{{ end }}{{ end }}{{ $t.label }}</span>
+      {{- end }}
     </div>
     {{- end }}
   </div>

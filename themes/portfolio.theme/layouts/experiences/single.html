@@ -58,7 +58,7 @@
         <div class="proj-card reveal">
           <h2 class="proj-section-title">{{ i18n "proj_specialties" }}</h2>
           <div class="proj-chips">
-            {{- range . }}{{ $sub := i18n (printf "%s_subtitle" .) }}<span class="proj-chip">{{ i18n . }}{{ with $sub }} <small>{{ . }}</small>{{ end }}</span>{{ end }}
+            {{- range . }}{{ $label := i18n . }}{{ $sub := i18n (printf "%s_subtitle" .) }}<span class="proj-chip proj-chip-spec"{{ with $sub }} title="{{ $label }} — {{ . }}"{{ end }}><span class="chip-label">{{ $label }}</span></span>{{ end }}
           </div>
         </div>
         {{- end }}

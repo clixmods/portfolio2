@@ -9,10 +9,11 @@
 .navbar {
   @include glass(var(--r-pill));
   @include glass-sheen;
+  overflow: visible; // évite de rogner le bouton CV à droite
   pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   padding: 9px 9px 9px 16px;
   height: var(--nav-h);
 
@@ -42,9 +43,15 @@
     color: #fff;
   }
   .nav-brand-role {
+    display: inline-block;
+    vertical-align: middle;
     font-size: 0.7rem;
     color: var(--text-dim);
     line-height: 1.1;
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -58,12 +65,13 @@
   a {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    font-size: 0.86rem;
+    gap: 6px;
+    font-size: 0.84rem;
     font-weight: 500;
     color: var(--text-soft);
-    padding: 8px 14px;
+    padding: 8px 11px;
     border-radius: var(--r-pill);
+    white-space: nowrap;
     transition: color 0.2s ease, background 0.2s ease;
 
     .nav-ico { font-size: 0.9rem; opacity: 0.85; }
@@ -145,8 +153,10 @@
   &.open { display: flex; }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   .nav-links { display: none; }
   .nav-burger { display: flex; }
+}
+@media (max-width: 600px) {
   .nav-brand-role { display: none; }
 }

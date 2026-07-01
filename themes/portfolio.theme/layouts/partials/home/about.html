@@ -1,18 +1,17 @@
 {{- $sd := .sd -}}
 {{- $p := $sd.profile -}}
-{{- $details := $p.details -}}
+{{- $about := $p.about -}}
 <div class="about-card reveal">
   <span class="section-eyebrow">{{ i18n "ui_about" }}</span>
-  <p class="about-bio">{{ $p.personal.bio | truncate 320 }}</p>
+  <p class="about-bio">{{ with $about.intro }}{{ . }}{{ else }}{{ printf "%s." (index (split $p.personal.bio ".") 0) }}{{ end }}</p>
   <div class="about-facts">
-    {{- with $details.formation }}
-    <div class="about-fact"><span class="about-fact-ico">🎓</span><span><strong>{{ . }}</strong></span></div>
+    {{- with $about.highlights }}
+    {{- range . }}
+    <div class="about-fact"><span class="about-fact-ico">{{ .icon }}</span><span>{{ .text }}</span></div>
     {{- end }}
-    {{- with $details.experience }}
-    <div class="about-fact"><span class="about-fact-ico">⌁</span><span>{{ . }}</span></div>
-    {{- end }}
-    {{- with $p.contact.location }}
-    <div class="about-fact"><span class="about-fact-ico">⌖</span><span>{{ . }}</span></div>
+    {{- else }}
+    {{- with $p.details.formation }}<div class="about-fact"><span class="about-fact-ico">🎓</span><span>{{ . }}</span></div>{{ end }}
+    {{- with $p.contact.location }}<div class="about-fact"><span class="about-fact-ico">⌖</span><span>{{ . }}</span></div>{{ end }}
     {{- end }}
   </div>
 </div>

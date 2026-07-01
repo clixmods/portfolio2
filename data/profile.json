@@ -31,7 +31,16 @@
     "details": {
       "formation": "BUT 3 IAMSI - IUT Montpellier-Sète (Diplômé)",
       "speciality": "Développement C#, Unity, Blazor, FastEndpoint",
-      "experience": "2+ ans de développement professionnel"
+      "experience": "2,5 ans"
+    },
+    "about": {
+      "intro": "Développeur jeu vidéo et logiciel, du gameplay à la mise en production.",
+      "highlights": [
+        { "icon": "💼", "text": "2,5 ans d'expérience professionnelle en C# / .NET" },
+        { "icon": "🎮", "text": "Contribution à Terra Memoria, jeu commercial publié sur PC & consoles" },
+        { "icon": "🛠️", "text": "Modding autodidacte : 1M+ téléchargements cumulés sur Steam (Call of Duty: Black Ops III)" },
+        { "icon": "🚀", "text": "Disponible en freelance" }
+      ]
     }
-  
+
 }

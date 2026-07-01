@@ -139,6 +139,51 @@
   &[data-type="epic"]:hover        { border-color: #cfcfcf; box-shadow: 0 0 30px -10px #888; }
 }
 
+// Menu « … » des actions supplémentaires (details natif)
+.proj-more {
+  position: relative;
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    min-width: 48px;
+    justify-content: center;
+    &::-webkit-details-marker { display: none; }
+  }
+
+  .proj-more-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 20;
+    min-width: 230px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    border-radius: var(--r-md);
+    background: rgba(13, 18, 34, 0.92);
+    border: 1px solid var(--glass-border-hi);
+    backdrop-filter: blur(18px);
+    box-shadow: var(--shadow-card);
+  }
+  &[open] summary { border-color: var(--glass-border-hi); }
+}
+
+.proj-more-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  transition: background 0.2s ease, color 0.2s ease;
+
+  .proj-action-glyph { width: 16px; height: 16px; svg { width: 16px; height: 16px; } }
+  &:hover { background: rgba(255, 255, 255, 0.07); color: #fff; }
+}
+
 // ── Faits marquants ───────────────────────────────────────
 .proj-facts {
   display: grid;
@@ -178,7 +223,6 @@
 .proj-main .prose > h1:first-child { display: none; }
 .proj-aside {
   display: flex; flex-direction: column; gap: var(--gap);
-  position: sticky; top: calc(var(--nav-h) + 24px);
 }
 
 .proj-card {
@@ -266,6 +310,22 @@
   .proj-chip-ico { opacity: 0.9; }
   img.proj-chip-ico { width: 16px; height: 16px; object-fit: contain; }
   small { color: var(--text-faint); font-size: 0.92em; }
+}
+
+// chips spécialités : nom seul (sous-titre en tooltip), largeur bornée,
+// défilement du texte au survol si débordement (piloté par main.js)
+.proj-chip-spec {
+  max-width: 200px;
+  overflow: hidden;
+  cursor: default;
+
+  .chip-label {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: transform 1.4s linear;
+  }
 }
 
 // ── Contributeurs ─────────────────────────────────────────

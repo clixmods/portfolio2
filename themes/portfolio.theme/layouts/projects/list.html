@@ -32,6 +32,19 @@
       (dict "main" "app" "subs" (slice "pro" "etude"))
 -}}
 
+{{/* Techs présentes dans les projets (pour les filtres avancés) */}}
+{{- $allLangs := slice }}{{ $allFws := slice }}{{ $allTools := slice }}
+{{- range $projects -}}
+  {{- with .Params.programming_languages }}{{ $allLangs = $allLangs | append . }}{{ end -}}
+  {{- with .Params.frameworks_engines }}{{ $allFws = $allFws | append . }}{{ end -}}
+  {{- with .Params.tools }}{{ $allTools = $allTools | append . }}{{ end -}}
+{{- end -}}
+{{- $techGroups := slice
+      (dict "label" (i18n "proj_languages")  "keys" (sort (uniq $allLangs)))
+      (dict "label" (i18n "proj_frameworks")  "keys" (sort (uniq $allFws)))
+      (dict "label" (i18n "ui_tools")         "keys" (sort (uniq $allTools)))
+-}}
+
 <section class="section page-shell">
   <div class="container">
     <div class="page-head reveal">
@@ -61,6 +74,29 @@
         {{- end }}
       </div>
       {{- end }}
+
+      {{/* Filtres avancés par techno (repliable) */}}
+      <button type="button" class="filter-adv-toggle" data-adv-toggle aria-expanded="false">
+        {{ i18n "filter_advanced" }}<span class="chev">▾</span>
+      </button>
+      <div class="filter-advanced" data-adv-panel hidden>
+        {{- range $techGroups }}
+        {{- $glabel := .label }}
+        {{- with .keys }}
+        <div class="filter-adv-group">
+          <span class="filter-adv-label">{{ $glabel }}</span>
+          <div class="adv-chips">
+            {{- range . }}
+            {{- $t := partial "tech-resolve.html" . }}
+            <button type="button" class="techchip" data-tech-key="{{ . }}">
+              {{- if $t.iconPath }}<img src="{{ $t.iconPath | relURL }}" alt="" width="14" height="14" loading="lazy">{{ else }}{{ with $t.icon }}<span>{{ . }}</span>{{ end }}{{ end }}{{ $t.label }}
+            </button>
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
+        {{- end }}
+      </div>
     </div>
 
     <div class="projects-grid">

@@ -30,6 +30,15 @@
   "details": {
     "formation": "BUT 3 IAMSI - IUT Montpellier-Sète",
     "speciality": "C#, Unity, Blazor, FastEndpoint development",
-    "experience": "2+ years of professional development"
+    "experience": "2.5 years"
+  },
+  "about": {
+    "intro": "Game and software developer, from gameplay to production.",
+    "highlights": [
+      { "icon": "💼", "text": "2.5 years of professional experience in C# / .NET" },
+      { "icon": "🎮", "text": "Contributor to Terra Memoria, a commercial game shipped on PC & consoles" },
+      { "icon": "🛠️", "text": "Self-taught modding: 1M+ cumulative downloads on Steam (Call of Duty: Black Ops III)" },
+      { "icon": "🚀", "text": "Available for freelance" }
+    ]
   }
 }

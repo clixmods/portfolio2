@@ -26,6 +26,68 @@
 
 .filter-subs[hidden] { display: none; }
 
+// ── Filtres avancés (techno) ──────────────────────────────
+.filter-adv-toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  background: transparent;
+  border: 1px dashed var(--glass-border-hi);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  &:hover { color: #fff; }
+  .chev { transition: transform 0.25s ease; font-size: 0.7rem; }
+  &.open .chev { transform: rotate(180deg); }
+}
+
+.filter-advanced {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--r-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+
+  &[hidden] { display: none; }
+}
+.filter-adv-group { display: flex; flex-direction: column; gap: 9px; }
+.filter-adv-label {
+  font-family: var(--font-head);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.adv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.techchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+  img { width: 14px; height: 14px; object-fit: contain; }
+  &:hover { color: #fff; border-color: var(--glass-border-hi); transform: translateY(-1px); }
+  &.active { color: #fff; background: rgba(59, 130, 246, 0.18); border-color: rgba(59, 130, 246, 0.5); }
+}
+
 .chip {
   display: inline-flex;
   align-items: center;

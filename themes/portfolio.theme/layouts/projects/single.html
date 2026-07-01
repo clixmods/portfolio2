@@ -31,19 +31,26 @@
         {{- if $P.logo }}<img class="proj-logo" src="{{ $P.logo | relURL }}" alt="{{ $page.Title }}">
         {{- else }}<h1 class="proj-hero-title">{{ $page.Title }}</h1>{{ end }}
         {{- with $P.subtitle }}<p class="proj-hero-sub">{{ . }}</p>{{ end }}
-        <div class="proj-meta">
-          {{- with $P.status }}<span class="proj-status"><span class="dot"></span>{{ . }}</span>{{ end }}
-          {{- if $catLabel }}<span class="tag">{{ $catLabel }}</span>{{ end }}
-          {{- with $page.Date }}<span class="tag">{{ time.Format "January 2006" . }}</span>{{ end }}
-          {{- range $P.tags }}<span class="tag">{{ . }}</span>{{ end }}
-        </div>
         {{- with $P.actions }}
+        {{- $primary := first 2 . }}{{ $extra := after 2 . }}
         <div class="proj-actions">
-          {{- range . }}
+          {{- range $primary }}
           {{- $g := $gExt }}{{ if eq .type "youtube" }}{{ $g = $gPlay }}{{ else if .primary }}{{ $g = $gCart }}{{ end }}
           <a class="proj-action{{ if .primary }} is-primary{{ end }}" data-type="{{ .type }}" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
             <span class="proj-action-glyph">{{ $g | safeHTML }}</span>{{ .label }}
           </a>
+          {{- end }}
+          {{- with $extra }}
+          <details class="proj-more">
+            <summary class="proj-action" aria-label="Plus de liens">+{{ len . }}</summary>
+            <div class="proj-more-menu">
+              {{- range . }}
+              <a class="proj-more-item" data-type="{{ .type }}" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+                <span class="proj-action-glyph">{{ $gExt | safeHTML }}</span>{{ .label }}
+              </a>
+              {{- end }}
+            </div>
+          </details>
           {{- end }}
         </div>
         {{- end }}
@@ -74,9 +81,10 @@
 
         {{/* Galerie */}}
         {{- range $P.galleries }}
+        {{- $gtitle := .title }}
         {{- with .images }}
         <section class="proj-card reveal">
-          <h2 class="proj-section-title">{{ i18n "proj_gallery" }}</h2>
+          <h2 class="proj-section-title">{{ with $gtitle }}{{ . }}{{ else }}{{ i18n "proj_gallery" }}{{ end }}</h2>
           <div class="proj-gallery">
             {{- range . }}
             {{- $u := replace (.url | relURL) " " "%20" }}
@@ -118,12 +126,13 @@
             {{- $pid := .person | default "" -}}
             {{- $person := false }}{{ if $pid }}{{ $person = index $people $pid }}{{ end -}}
             {{- $isMe := eq $pid "clement-garcia" -}}
-            {{- $avatar := "/images/avatar6-8.svg" -}}{{- $name := "" -}}
+            {{- $default := "/images/avatar-default.svg" -}}
+            {{- $avatar := $default -}}{{- $name := "" -}}
             {{- with $person }}{{ $name = .Title }}{{ with .Params.avatar }}{{ $avatar = . }}{{ end }}
             {{- else }}{{ $name = .name | default ($pid | humanize | title) }}{{ end -}}
             {{- $roles := .roles }}{{ if and (not $roles) .role }}{{ $roles = slice .role }}{{ end -}}
             <div class="contributor{{ if $isMe }} is-me{{ end }}">
-              <img class="contributor-avatar" src="{{ $avatar | relURL }}" alt="{{ $name }}" loading="lazy">
+              <img class="contributor-avatar" src="{{ $avatar | relURL }}" alt="{{ $name }}" loading="lazy" onerror="this.onerror=null;this.src='{{ $default | relURL }}'">
               <div>
                 <div class="contributor-name">{{ $name }}{{ if $isMe }}<span class="contributor-me">{{ i18n "proj_you" }}</span>{{ end }}</div>
                 <div class="contributor-roles">{{ with $roles }}{{ delimit . ", " }}{{ end }}</div>
@@ -184,8 +193,8 @@
         <div class="proj-card reveal">
           <h2 class="proj-section-title">{{ i18n "proj_specialties" }}</h2>
           <div class="proj-chips">
-            {{- range . }}{{ $sub := i18n (printf "%s_subtitle" .) }}
-            <span class="proj-chip">{{ i18n . }}{{ with $sub }} <small>{{ . }}</small>{{ end }}</span>
+            {{- range . }}{{ $label := i18n . }}{{ $sub := i18n (printf "%s_subtitle" .) }}
+            <span class="proj-chip proj-chip-spec"{{ with $sub }} title="{{ $label }} — {{ . }}"{{ end }}><span class="chip-label">{{ $label }}</span></span>
             {{- end }}
           </div>
         </div>

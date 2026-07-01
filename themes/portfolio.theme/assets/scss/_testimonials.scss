@@ -63,20 +63,31 @@
   overflow: hidden;
 }
 
-// pile : toutes les slides dans la même cellule → hauteur = la plus grande
-.testi-viewport { display: grid; }
+// slide active en flux (définit la hauteur), inactives en absolu (overlay fondu)
+// → la hauteur du bloc s'adapte au témoignage courant (pas de gros vides)
+.testi-viewport { position: relative; }
 
 .testi-slide {
-  grid-area: 1 / 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
   opacity: 0;
   visibility: hidden;
   transform: translateY(8px);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
 
-  &.is-active { opacity: 1; visibility: visible; transform: none; }
+  &.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
 }
 
 .testi-quote {
@@ -95,6 +106,30 @@
     margin-right: 6px;
     vertical-align: -0.4em;
   }
+}
+
+// clamp à 5 lignes tant que la slide n'est pas dépliée
+.testi-slide:not(.expanded) .testi-quote {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.testi-more {
+  align-self: flex-start;
+  margin-top: -6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cyan);
+  transition: color 0.2s ease;
+  &:hover { color: #fff; }
+  &[hidden] { display: none; }
 }
 
 .testi-author {

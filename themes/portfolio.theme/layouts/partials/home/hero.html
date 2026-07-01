@@ -16,7 +16,7 @@
         </h1>
 
         <p class="hero-sub">
-          {{- with $personal.bio }}{{ . | truncate 220 }}{{ else }}{{ $personal.subtitle }}{{ end -}}
+          {{- with $personal.bio }}{{ printf "%s." (index (split . ".") 0) }}{{ else }}{{ $personal.subtitle }}{{ end -}}
         </p>
 
         <div class="hero-meta">

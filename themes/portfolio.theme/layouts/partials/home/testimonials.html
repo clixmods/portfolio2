@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="testi-carousel" data-testi>
+    <div class="testi-carousel" data-testi data-more-label="{{ i18n "ui_show_more" }}" data-less-label="{{ i18n "ui_show_less" }}">
       <div class="testi-viewport">
         {{- range $i, $t := $items }}
         {{- $person := index $people $t.personId -}}
@@ -27,6 +27,7 @@
         {{- $dur := math.Min (add 3000 (mul $words 300)) 16000 -}}
         <figure class="testi-slide{{ if eq $i 0 }} is-active{{ end }}" data-duration="{{ $dur }}">
           <blockquote class="testi-quote">{{ $t.text }}</blockquote>
+          <button type="button" class="testi-more" data-more hidden>{{ i18n "ui_show_more" }}</button>
           <figcaption class="testi-author">
             {{- with $avatar }}<img src="{{ . | relURL }}" alt="{{ $name }}" loading="lazy">{{ end }}
             <span>

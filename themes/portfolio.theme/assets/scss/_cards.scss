@@ -31,8 +31,8 @@
   &.is-warm .shortcut-ico { box-shadow: inset 0 0 24px -10px var(--warm); color: var(--orange); }
 
   .shortcut-body { flex: 1; min-width: 0; }
-  .shortcut-title { font-family: var(--font-head); font-weight: 600; font-size: 1.02rem; color: #fff; }
-  .shortcut-desc { font-size: 0.82rem; color: var(--text-dim); }
+  .shortcut-title { display: block; font-family: var(--font-head); font-weight: 600; font-size: 1.02rem; color: #fff; }
+  .shortcut-desc { display: block; margin-top: 3px; font-size: 0.82rem; color: var(--text-dim); }
 
   .shortcut-arrow {
     flex-shrink: 0;
@@ -97,11 +97,17 @@
   }
   &:hover .project-thumb img { transform: scale(1.06); }
 
+  // badge type : plus opaque/translucide, à la DA des boutons verre
   .project-sector {
     position: absolute;
     top: 12px;
     left: 12px;
     z-index: 2;
+    background: rgba(13, 18, 34, 0.72);
+    border-color: var(--glass-border-hi);
+    color: #fff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .project-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
@@ -115,6 +121,15 @@
     overflow: hidden;
   }
   .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+
+  // mini-chips technos (remplacent les tags libres)
+  .tag-tech {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    img { width: 14px; height: 14px; object-fit: contain; }
+    .tag-tech-emoji { font-size: 0.85em; }
+  }
 }
 
 // ── Carte « À propos » (sidebar) ──────────────────────────

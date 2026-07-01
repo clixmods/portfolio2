@@ -25,6 +25,7 @@ ui_tools: "Tools"
 
 # Projects page filters
 cat_all: "All"
+filter_advanced: "Advanced filters"
 cat_jv: "Video Games"
 cat_app: "Apps & Web"
 cat_mods: "Mods"
@@ -82,6 +83,8 @@ ui_hero_highlight: "experiences."
 ui_based_in: "based in"
 
 ui_rights_reserved: "All rights reserved."
+ui_show_more: "Show more"
+ui_show_less: "Show less"
 
 # ─────────────────────────────────────────────
 # Key labels (languages / frameworks / specialties / soft skills / tools)
