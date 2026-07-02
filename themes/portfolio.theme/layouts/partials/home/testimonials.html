@@ -16,37 +16,7 @@
       </div>
     </div>
 
-    <div class="testi-carousel" data-testi data-more-label="{{ i18n "ui_show_more" }}" data-less-label="{{ i18n "ui_show_less" }}">
-      <div class="testi-viewport">
-        {{- range $i, $t := $items }}
-        {{- $person := index $people $t.personId -}}
-        {{- $avatar := "" -}}{{- $name := $t.personId -}}
-        {{- with $person }}{{ $avatar = .Params.avatar }}{{ $name = .Title }}{{ end -}}
-        {{- /* Durée ≈ temps de lecture : 3 s + 300 ms/mot, plafonné à 16 s */ -}}
-        {{- $words := len (split (trim $t.text " ") " ") -}}
-        {{- $dur := math.Min (add 3000 (mul $words 300)) 16000 -}}
-        <figure class="testi-slide{{ if eq $i 0 }} is-active{{ end }}" data-duration="{{ $dur }}">
-          <blockquote class="testi-quote">{{ $t.text }}</blockquote>
-          <button type="button" class="testi-more" data-more hidden>{{ i18n "ui_show_more" }}</button>
-          <figcaption class="testi-author">
-            {{- with $avatar }}<img src="{{ . | relURL }}" alt="{{ $name }}" loading="lazy">{{ end }}
-            <span>
-              <span class="testimonial-name">{{ $name }}</span>
-              <span class="testimonial-role">{{ $t.position }}{{ with $t.company }} · {{ . }}{{ end }}</span>
-            </span>
-          </figcaption>
-        </figure>
-        {{- end }}
-      </div>
-
-      <div class="testi-progress"><span></span></div>
-
-      <div class="testi-dots">
-        {{- range $i, $t := $items }}
-        <button type="button" class="testi-dot{{ if eq $i 0 }} is-active{{ end }}" data-i="{{ $i }}" aria-label="Témoignage {{ add $i 1 }}"></button>
-        {{- end }}
-      </div>
-    </div>
+    {{ partial "testi-carousel.html" (dict "items" $items "people" $people) }}
   </div>
 </section>
 {{- end -}}

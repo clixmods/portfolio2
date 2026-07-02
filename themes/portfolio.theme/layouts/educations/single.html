@@ -52,26 +52,14 @@
         {{- end }}
 
         {{- with $P.testimonials }}
+        {{- $items := slice }}
+        {{- range . }}{{ with index $tmap . }}{{ $items = $items | append . }}{{ end }}{{ end }}
+        {{- with $items }}
         <section class="proj-card reveal">
           <h2 class="proj-section-title">{{ i18n "ui_testimonials" }}</h2>
-          <div class="testimonials-grid">
-            {{- range . }}
-            {{- $t := index $tmap . }}{{ $person := index $people . }}
-            {{- if $t }}
-            <figure class="testimonial">
-              <blockquote class="testimonial-quote">{{ $t.text | truncate 240 }}</blockquote>
-              <figcaption class="testimonial-author">
-                {{- with $person }}{{ with .Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="lazy">{{ end }}{{ end }}
-                <span>
-                  <span class="testimonial-name">{{ with $person }}{{ .Title }}{{ else }}{{ $t.personId }}{{ end }}</span>
-                  <span class="testimonial-role">{{ $t.position }}{{ with $t.company }} · {{ . }}{{ end }}</span>
-                </span>
-              </figcaption>
-            </figure>
-            {{- end }}
-            {{- end }}
-          </div>
+          {{ partial "testi-carousel.html" (dict "items" $items "people" $people) }}
         </section>
+        {{- end }}
         {{- end }}
       </div>
 

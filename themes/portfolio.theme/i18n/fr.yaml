@@ -11,6 +11,7 @@ ui_experiences: "Expériences"
 ui_educations: "Formation"
 
 ui_download_cv: "Télécharger CV"
+ui_cv: "CV"
 ui_view_projects: "Voir mes projets"
 ui_contact_me: "Me contacter"
 ui_view_all_projects: "Voir tous les projets"
@@ -20,12 +21,14 @@ ui_read_more: "Lire la suite"
 ui_back_home: "Retour à l'accueil"
 
 ui_recent_projects: "Projets récents"
+ui_featured_projects: "Projets mis en avant"
 ui_technologies: "Technologies"
 ui_tools: "Outils"
 
 # Filtres page Projets
 cat_all: "Tous"
 filter_advanced: "Filtres avancés"
+filter_reset: "Réinitialiser"
 cat_jv: "Jeux vidéo"
 cat_app: "Apps & Web"
 cat_mods: "Mods"
@@ -85,6 +88,8 @@ ui_based_in: "basé à"
 ui_rights_reserved: "Tous droits réservés."
 ui_show_more: "Voir plus"
 ui_show_less: "Voir moins"
+ui_prev: "Précédent"
+ui_next: "Suivant"
 
 # ─────────────────────────────────────────────
 # Libellés des clés (langages / frameworks / spécialités / soft skills / outils)

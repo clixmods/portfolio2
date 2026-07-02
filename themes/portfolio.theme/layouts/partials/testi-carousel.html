@@ -1,0 +1,49 @@
+{{- /*
+  Carrousel de témoignages réutilisable (accueil + formations).
+  Contexte = dict { items: <slice de témoignages>, people: <map id→page> }.
+  Chaque item attend : .text, .personId, .position, .company.
+  Ne rend que le bloc .testi-carousel — le <section>/titre est fourni par l'appelant.
+*/ -}}
+{{- $items := .items -}}
+{{- $people := .people | default dict -}}
+{{- with $items }}
+<div class="testi-carousel" data-testi data-more-label="{{ i18n "ui_show_more" }}" data-less-label="{{ i18n "ui_show_less" }}">
+  <div class="testi-viewport">
+    {{- range $i, $t := . }}
+    {{- $person := index $people $t.personId -}}
+    {{- $avatar := "" -}}{{- $name := $t.personId -}}
+    {{- with $person }}{{ $avatar = .Params.avatar }}{{ $name = .Title }}{{ end -}}
+    {{- /* Durée ≈ temps de lecture : 3 s + 300 ms/mot, plafonné à 16 s */ -}}
+    {{- $words := len (split (trim $t.text " ") " ") -}}
+    {{- $dur := math.Min (add 3000 (mul $words 300)) 16000 -}}
+    <figure class="testi-slide{{ if eq $i 0 }} is-active{{ end }}" data-duration="{{ $dur }}">
+      <blockquote class="testi-quote">{{ $t.text }}</blockquote>
+      <button type="button" class="testi-more" data-more hidden>{{ i18n "ui_show_more" }}</button>
+      <figcaption class="testi-author">
+        {{- with $avatar }}<img src="{{ . | relURL }}" alt="{{ $name }}" loading="lazy">{{ end }}
+        <span>
+          <span class="testimonial-name">{{ $name }}</span>
+          <span class="testimonial-role">{{ $t.position }}{{ with $t.company }} · {{ . }}{{ end }}</span>
+        </span>
+      </figcaption>
+    </figure>
+    {{- end }}
+  </div>
+
+  <div class="testi-progress"><span></span></div>
+
+  <div class="testi-controls">
+    <button type="button" class="testi-nav testi-prev" data-prev aria-label="{{ i18n "ui_prev" }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="testi-dots">
+      {{- range $i, $t := . }}
+      <button type="button" class="testi-dot{{ if eq $i 0 }} is-active{{ end }}" data-i="{{ $i }}" aria-label="{{ i18n "ui_testimonials" }} {{ add $i 1 }}"></button>
+      {{- end }}
+    </div>
+    <button type="button" class="testi-nav testi-next" data-next aria-label="{{ i18n "ui_next" }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+{{- end }}

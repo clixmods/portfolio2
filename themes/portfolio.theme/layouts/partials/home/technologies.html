@@ -1,15 +1,15 @@
 {{- $groups := slice
-      (dict "label" (i18n "proj_languages")  "items" (sort (where site.Data.programming_languages "displayedInPortfolio" true) "experience" "desc"))
-      (dict "label" (i18n "proj_frameworks")  "items" (sort (where site.Data.frameworks_engines "displayedInPortfolio" true) "experience" "desc"))
-      (dict "label" (i18n "ui_tools")         "items" (sort (where site.Data.tools "displayedInPortfolio" true) "experience" "desc"))
+      (dict "label" (i18n "proj_languages")   "items" (sort (where site.Data.programming_languages "displayedInPortfolio" true) "experience" "desc"))
+      (dict "label" (i18n "proj_frameworks")   "items" (sort (where site.Data.frameworks_engines "displayedInPortfolio" true) "experience" "desc"))
+      (dict "label" (i18n "proj_specialties")  "items" (sort (where site.Data.specialties "displayedInPortfolio" true) "experience" "desc"))
+      (dict "label" (i18n "proj_softskills")   "items" (where site.Data.soft_skills "displayedInPortfolio" true))
 -}}
 <div class="tech-card reveal">
-  <span class="section-eyebrow">{{ i18n "ui_technologies" }}</span>
-
   {{- range $groups }}
+  {{- $label := .label }}
   {{- with .items }}
   <div class="tech-group">
-    <div class="tech-subtitle">{{ $.label }}</div>
+    <div class="tech-subtitle">{{ $label }}</div>
     <div class="tech-pills">
       {{- range . }}
       {{- $t := partial "tech-resolve.html" .key -}}

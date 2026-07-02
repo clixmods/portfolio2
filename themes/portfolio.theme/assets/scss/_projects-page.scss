@@ -27,8 +27,14 @@
 .filter-subs[hidden] { display: none; }
 
 // ── Filtres avancés (techno) ──────────────────────────────
+.filter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
 .filter-adv-toggle {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -41,11 +47,54 @@
   background: transparent;
   border: 1px dashed var(--glass-border-hi);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 
   &:hover { color: #fff; }
   .chev { transition: transform 0.25s ease; font-size: 0.7rem; }
   &.open .chev { transform: rotate(180deg); }
+
+  // Sélection active : trait plein + accent froid pour se distinguer
+  &.active {
+    color: #fff;
+    border-style: solid;
+    border-color: rgba(59, 130, 246, 0.6);
+    background: rgba(59, 130, 246, 0.14);
+  }
+}
+
+// Badge du nombre de technos sélectionnées
+.adv-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  min-width: 18px;
+  padding: 3px 6px;
+  text-align: center;
+  border-radius: var(--r-pill);
+  background: var(--grad-cold);
+  color: #fff;
+  &[hidden] { display: none; }
+}
+
+// Bouton de réinitialisation des filtres
+.filter-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  svg { width: 14px; height: 14px; }
+  &:hover { color: #fff; border-color: var(--glass-border-hi); }
+  &[hidden] { display: none; }
 }
 
 .filter-advanced {

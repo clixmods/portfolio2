@@ -47,14 +47,19 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: flex-start; // tout le contenu du hero ancré à gauche
+  gap: 14px;
 }
 
+// Logo ancré en bas à gauche, dimension bornée, séparé du texte sous-jacent
 .proj-logo {
-  height: clamp(48px, 7vw, 80px);
+  align-self: flex-start;
+  height: clamp(44px, 6vw, 72px);
   width: auto;
-  max-width: 70%;
+  max-width: #{"min(60%, 320px)"};
+  margin-bottom: 2px;
   object-fit: contain;
+  object-position: left bottom;
   filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.6));
 }
 
@@ -312,19 +317,15 @@
   small { color: var(--text-faint); font-size: 0.92em; }
 }
 
-// chips spécialités : nom seul (sous-titre en tooltip), largeur bornée,
-// défilement du texte au survol si débordement (piloté par main.js)
+// chips spécialités : nom complet toujours visible (sous-titre en tooltip).
+// La chip s'élargit pour contenir son texte ; sur les libellés très longs
+// le texte passe à la ligne plutôt que d'être tronqué.
 .proj-chip-spec {
-  max-width: 200px;
-  overflow: hidden;
   cursor: default;
 
   .chip-label {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: transform 1.4s linear;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 

@@ -1,17 +1,50 @@
+{{- /* Projets mis en avant (featured), filtrables par catégorie via onglets. */ -}}
 {{- $featured := where (where site.RegularPages "Section" "projects") "Params.featured" true -}}
-{{- $projects := first 6 $featured.ByDate.Reverse -}}
+{{- $featured = $featured.ByDate.Reverse -}}
+
+{{- /* Compteurs par catégorie principale (app / jv / mods / tools) */ -}}
+{{- $counts := dict "all" (len $featured) -}}
+{{- range $featured -}}
+  {{- $c := partial "project-cats.html" (.Params.sector | default "") -}}
+  {{- with $c.main -}}
+    {{- $counts = merge $counts (dict . (add (int (index $counts . | default 0)) 1)) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Onglets : catégories réellement présentes, ordre fixe (pas de « tous »).
+       Le premier onglet (Apps & web) est actif par défaut. */ -}}
+{{- $order := slice "app" "jv" "mods" "tools" -}}
+{{- $tabs := slice -}}
+{{- range $order }}
+  {{- if gt (int (index $counts . | default 0)) 0 }}
+    {{- $tabs = $tabs | append (dict "key" . "label" (i18n (printf "cat_%s" .))) }}
+  {{- end }}
+{{- end }}
+
 <div class="projects-col">
   <div class="section-head">
     <div>
-      <span class="section-eyebrow">{{ i18n "ui_recent_projects" }}</span>
+      <span class="section-eyebrow">{{ i18n "ui_featured_projects" }}</span>
     </div>
     <a class="btn btn-ghost" href="{{ relLangURL "/projects/" }}">{{ i18n "ui_view_all_projects" }}</a>
   </div>
 
+  {{- with $featured }}
+  <div class="filter-bar filter-bar-compact" data-project-filter>
+    <div class="filter-mains" role="tablist">
+      {{- range $i, $t := $tabs }}
+      <button type="button" class="chip{{ if eq $i 0 }} active{{ end }}" data-main="{{ $t.key }}">
+        {{ $t.label }}<span class="chip-count">{{ index $counts $t.key | default 0 }}</span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
+
   <div class="projects-mosaic">
-    {{- range $projects }}
+    {{- range . }}
     {{- $size := .Params.tile_size | default "1x1" -}}
     {{ partial "project-card.html" (dict "page" . "class" (cond (eq $size "2x1") "tile-2x1" "")) }}
     {{- end }}
   </div>
+  {{- end }}
 </div>

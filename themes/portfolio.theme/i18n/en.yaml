@@ -11,6 +11,7 @@ ui_experiences: "Experience"
 ui_educations: "Education"
 
 ui_download_cv: "Download CV"
+ui_cv: "CV"
 ui_view_projects: "View my projects"
 ui_contact_me: "Get in touch"
 ui_view_all_projects: "View all projects"
@@ -20,12 +21,14 @@ ui_read_more: "Read more"
 ui_back_home: "Back to home"
 
 ui_recent_projects: "Recent projects"
+ui_featured_projects: "Featured projects"
 ui_technologies: "Technologies"
 ui_tools: "Tools"
 
 # Projects page filters
 cat_all: "All"
 filter_advanced: "Advanced filters"
+filter_reset: "Reset"
 cat_jv: "Video Games"
 cat_app: "Apps & Web"
 cat_mods: "Mods"
@@ -85,6 +88,8 @@ ui_based_in: "based in"
 ui_rights_reserved: "All rights reserved."
 ui_show_more: "Show more"
 ui_show_less: "Show less"
+ui_prev: "Previous"
+ui_next: "Next"
 
 # ─────────────────────────────────────────────
 # Key labels (languages / frameworks / specialties / soft skills / tools)

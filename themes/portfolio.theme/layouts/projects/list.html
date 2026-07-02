@@ -75,10 +75,16 @@
       </div>
       {{- end }}
 
-      {{/* Filtres avancés par techno (repliable) */}}
-      <button type="button" class="filter-adv-toggle" data-adv-toggle aria-expanded="false">
-        {{ i18n "filter_advanced" }}<span class="chev">▾</span>
-      </button>
+      {{/* Filtres avancés par techno (repliable) + réinitialisation */}}
+      <div class="filter-actions">
+        <button type="button" class="filter-adv-toggle" data-adv-toggle aria-expanded="false">
+          {{ i18n "filter_advanced" }}<span class="adv-count" data-adv-count hidden></span><span class="chev">▾</span>
+        </button>
+        <button type="button" class="filter-reset" data-filter-reset hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          {{ i18n "filter_reset" }}
+        </button>
+      </div>
       <div class="filter-advanced" data-adv-panel hidden>
         {{- range $techGroups }}
         {{- $glabel := .label }}

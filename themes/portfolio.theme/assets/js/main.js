@@ -60,6 +60,25 @@
     var curSub = "all";
     var selTech = [];
 
+    var advToggleEl = fbar.querySelector("[data-adv-toggle]");
+    var advCountEl = fbar.querySelector("[data-adv-count]");
+    var resetBtn = fbar.querySelector("[data-filter-reset]");
+
+    // Reflète l'état des filtres : badge de compte + toggle actif + bouton reset
+    var updateIndicators = function () {
+      if (advCountEl) {
+        if (selTech.length) {
+          advCountEl.textContent = selTech.length;
+          advCountEl.hidden = false;
+        } else {
+          advCountEl.hidden = true;
+        }
+      }
+      if (advToggleEl) advToggleEl.classList.toggle("active", selTech.length > 0);
+      var anyActive = curMain !== "all" || curSub !== "all" || selTech.length > 0;
+      if (resetBtn) resetBtn.hidden = !anyActive;
+    };
+
     var applyFilter = function () {
       cards.forEach(function (c) {
         var m = c.getAttribute("data-main") || "";
@@ -69,6 +88,7 @@
         var techOk = selTech.every(function (t) { return techs.indexOf(" " + t + " ") > -1; });
         c.classList.toggle("is-hidden", !(catOk && techOk));
       });
+      updateIndicators();
     };
 
     var setSub = function (row, key) {
@@ -128,16 +148,32 @@
       });
     });
 
+    // Réinitialisation : catégorie, sous-catégorie et technos
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function () {
+        selTech = [];
+        fbar.querySelectorAll("[data-tech-key].active").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        setMain("all"); // remet curMain/curSub à « all » puis applyFilter()
+      });
+    }
+
+    // Sélection par défaut : « all » si l'onglet existe (page Projets),
+    // sinon le premier onglet disponible (accueil « mis en avant »).
+    var mainKeys = [];
+    mains.forEach(function (b) { mainKeys.push(b.getAttribute("data-main")); });
+    var fallback = mainKeys.indexOf("all") > -1 ? "all" : (mainKeys[0] || "all");
+
     // Pré-sélection via hash (#jv, #app, #mods, #tools)
     var initial = (location.hash || "").replace("#", "");
-    var valid = false;
-    mains.forEach(function (b) { if (b.getAttribute("data-main") === initial) valid = true; });
-    setMain(valid ? initial : "all", true);
+    var valid = mainKeys.indexOf(initial) > -1;
+    setMain(valid ? initial : fallback, true);
   }
 
   // ── Carrousel témoignages (un à la fois, auto-défilement) ──
-  var testi = document.querySelector("[data-testi]");
-  if (testi) {
+  // Supporte plusieurs carrousels sur une même page (accueil + formations).
+  document.querySelectorAll("[data-testi]").forEach(function (testi) {
     var slides = Array.prototype.slice.call(testi.querySelectorAll(".testi-slide"));
     var dots = Array.prototype.slice.call(testi.querySelectorAll(".testi-dot"));
     var bar = testi.querySelector(".testi-progress span");
@@ -146,16 +182,24 @@
     var timer = null;
     var paused = false;
     var expanded = false;
+    // Suivi du temps pour reprendre là où on s'était arrêté (pause au survol)
+    var curDur = 0;       // durée pleine de la slide courante
+    var remaining = null; // temps restant avant la prochaine slide
+    var startTime = 0;    // horodatage du (re)démarrage du minuteur courant
 
     var durationOf = function (n) {
       return parseInt(slides[n].getAttribute("data-duration"), 10) || 6000;
     };
 
-    var runBar = function (dur) {
+    // Anime la barre de progression sur `dur` ms.
+    // resume=true : repart de la largeur figée courante (ne remet pas à 0).
+    var startBar = function (dur, resume) {
       if (!bar) return;
-      bar.style.transition = "none";
-      bar.style.width = "0%";
-      void bar.offsetWidth; // reflow
+      if (!resume) {
+        bar.style.transition = "none";
+        bar.style.width = "0%";
+        void bar.offsetWidth; // reflow
+      }
       if (!paused && !reduce) {
         bar.style.transition = "width " + dur + "ms linear";
         bar.style.width = "100%";
@@ -165,12 +209,17 @@
     var moreLabel = testi.getAttribute("data-more-label") || "Voir plus";
     var lessLabel = testi.getAttribute("data-less-label") || "Voir moins";
 
-    var schedule = function () {
+    // resume=true : reprend le décompte restant (survol) sans le réinitialiser.
+    var schedule = function (resume) {
       clearTimeout(timer);
       if (paused || expanded || reduce || slides.length < 2) return;
-      var dur = durationOf(idx);
-      runBar(dur);
-      timer = setTimeout(function () { go(idx + 1); }, dur);
+      if (!resume || remaining == null) {
+        curDur = durationOf(idx);
+        remaining = curDur;
+      }
+      startTime = Date.now();
+      startBar(remaining, resume);
+      timer = setTimeout(function () { go(idx + 1); }, remaining);
     };
 
     // Affiche « Voir plus » seulement si la citation déborde (état clampé)
@@ -199,6 +248,7 @@
       collapseAll();
       slides[idx].classList.add("is-active");
       if (dots[idx]) dots[idx].classList.add("is-active");
+      remaining = null; // nouvelle slide → durée pleine
       updateMore();
       schedule();
     };
@@ -213,6 +263,7 @@
           clearTimeout(timer);
           if (bar) { bar.style.transition = "none"; bar.style.width = "0%"; }
         } else {
+          remaining = null;
           schedule();
         }
       });
@@ -223,11 +274,27 @@
         go(parseInt(d.getAttribute("data-i"), 10));
       });
     });
+
+    var prevBtn = testi.querySelector("[data-prev]");
+    var nextBtn = testi.querySelector("[data-next]");
+    if (prevBtn) prevBtn.addEventListener("click", function () { go(idx - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { go(idx + 1); });
+    // Un seul témoignage : navigation inutile
+    if (slides.length < 2) {
+      if (prevBtn) prevBtn.hidden = true;
+      if (nextBtn) nextBtn.hidden = true;
+    }
+
     window.addEventListener("resize", updateMore);
 
     testi.addEventListener("mouseenter", function () {
       paused = true;
       clearTimeout(timer);
+      // Mémorise le temps déjà écoulé pour reprendre ensuite (pas de reset)
+      if (remaining != null) {
+        remaining = remaining - (Date.now() - startTime);
+        if (remaining < 0) remaining = 0;
+      }
       if (bar) {
         var w = window.getComputedStyle(bar).width;
         bar.style.transition = "none";
@@ -236,28 +303,11 @@
     });
     testi.addEventListener("mouseleave", function () {
       paused = false;
-      schedule();
+      schedule(true); // reprend sur le temps restant
     });
 
     updateMore();
     schedule();
-  }
-
-  // ── Chips spécialités : défilement du texte au survol si débordement ──
-  document.querySelectorAll(".proj-chip-spec").forEach(function (chip) {
-    var label = chip.querySelector(".chip-label");
-    if (!label) return;
-    chip.addEventListener("mouseenter", function () {
-      var over = label.scrollWidth - label.clientWidth;
-      if (over > 2) {
-        label.style.textOverflow = "clip";
-        label.style.transform = "translateX(-" + over + "px)";
-      }
-    });
-    chip.addEventListener("mouseleave", function () {
-      label.style.transform = "";
-      label.style.textOverflow = "";
-    });
   });
 
   // ── Lightbox galerie projet ───────────────────────────

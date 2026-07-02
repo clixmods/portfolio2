@@ -67,6 +67,39 @@
   gap: var(--gap);
 }
 
+// carte masquée par les onglets de filtre (accueil)
+.projects-mosaic .project-card.is-hidden { display: none; }
+
+// barre d'onglets compacte au-dessus de la mosaïque « mis en avant »
+.filter-bar-compact {
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+// ── Groupes « Projets mis en avant » par catégorie ────────
+.featured-group {
+  margin-top: var(--gap);
+  &:first-of-type { margin-top: 18px; }
+}
+.featured-group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 14px;
+
+  &::before {
+    content: "";
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--grad-cold);
+  }
+}
+
 .project-card {
   @include glass(var(--r-lg));
   @include hover-lift;
