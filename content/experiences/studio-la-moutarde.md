@@ -44,7 +44,6 @@ soft_skills:
     - skill_gestion_de_projet
     - skill_communication
 fmContentType: experience-content-type
-date: 2023-01-01T00:00:00.000Z
 draft: false
 ---
 

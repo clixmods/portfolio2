@@ -4,11 +4,6 @@
   "pageBundle": false,
   "fields": [
     {
-      "title": "Date",
-      "name": "date",
-      "type": "datetime"
-    },
-    {
       "title": "Brouillon",
       "name": "draft",
       "type": "draft"
@@ -60,8 +55,8 @@
       "name": "programming_languages",
       "type": "dataFile",
       "dataFileId": "programming_languages_simple",
-      "dataFileKey": "name",
-      "dataFileValue": "name",
+      "dataFileKey": "key",
+      "dataFileValue": "key",
       "multiple": true,
       "description": "Sélectionnez les langages de programmation utilisés dans cette expérience"
     },
@@ -70,8 +65,8 @@
       "name": "frameworks_engines",
       "type": "dataFile",
       "dataFileId": "frameworks_engines_simple",
-      "dataFileKey": "name",
-      "dataFileValue": "name",
+      "dataFileKey": "key",
+      "dataFileValue": "key",
       "multiple": true,
       "description": "Sélectionnez les frameworks et moteurs utilisés"
     },
@@ -80,18 +75,28 @@
       "name": "specialties",
       "type": "dataFile",
       "dataFileId": "specialties",
-      "dataFileKey": "name",
-      "dataFileValue": "name",
+      "dataFileKey": "key",
+      "dataFileValue": "key",
       "multiple": true,
       "description": "Sélectionnez les spécialités impliquées dans cette expérience"
+    },
+    {
+      "title": "Soft Skills",
+      "name": "soft_skills",
+      "type": "dataFile",
+      "dataFileId": "soft_skills",
+      "dataFileKey": "key",
+      "dataFileValue": "key",
+      "multiple": true,
+      "description": "Sélectionnez les soft skills impliqués dans cette expérience"
     },
     {
       "title": "Outils",
       "name": "tools",
       "type": "dataFile",
       "dataFileId": "tools",
-      "dataFileKey": "name",
-      "dataFileValue": "name",
+      "dataFileKey": "key",
+      "dataFileValue": "key",
       "multiple": true,
       "description": "Sélectionnez les outils utilisés dans cette expérience"
     },
@@ -117,25 +122,6 @@
       "type": "block",
       "fieldGroup": [
         "projects_group"
-      ]
-    },
-    {
-      "title": "period",
-      "name": "period",
-      "type": "string"
-    },
-    {
-      "title": "status",
-      "name": "status",
-      "type": "string"
-    },
-    {
-      "title": "soft_skills",
-      "name": "soft_skills",
-      "type": "choice",
-      "choices": [
-        "Travail en équipe",
-        "Gestion du temps"
       ]
     }
   ]
