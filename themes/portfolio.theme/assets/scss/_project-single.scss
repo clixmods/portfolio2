@@ -22,12 +22,18 @@
   min-height: 360px;
   display: flex;
   align-items: flex-end;
-  overflow: hidden;
+  overflow: visible; // laisse déborder le menu « … » des actions ; l'image de fond est rognée par .proj-hero-bg
+
+  // Quand le menu « … » est ouvert, on élève tout le hero pour que le dropdown
+  // passe au-dessus de la section suivante (.proj-hero-body crée un contexte d'empilement)
+  &:has(.proj-more[open]) { z-index: 10; }
 }
 
 .proj-hero-bg {
   position: absolute;
   inset: 0;
+  border-radius: inherit; // rogne l'image aux coins arrondis à la place de .proj-hero
+  overflow: hidden;
   img { width: 100%; height: 100%; object-fit: cover; }
   &::after {
     content: "";
@@ -272,6 +278,23 @@
     text-shadow: 0 1px 4px rgba(0,0,0,0.8);
   }
   &:hover::after { opacity: 0.9; }
+
+  &.is-hidden { display: none; }
+}
+// Images au-delà de 9 : révélées quand la galerie est dépliée
+.proj-gallery.expanded .proj-gallery-item.is-hidden { display: block; }
+
+.proj-gallery-more {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px;
+  font-family: var(--font-head); font-size: 0.82rem; font-weight: 600;
+  color: var(--cyan);
+  padding: 9px 18px; border-radius: var(--r-pill);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  &:hover { background: rgba(56, 189, 248, 0.16); border-color: rgba(56, 189, 248, 0.6); }
 }
 
 // ── Vidéos YouTube ────────────────────────────────────────
@@ -389,6 +412,19 @@
     background: var(--glass-bg); border: 1px solid var(--glass-border);
     cursor: pointer;
   }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: #fff; cursor: pointer;
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    transition: background 0.2s ease, border-color 0.2s ease;
+    &:hover { background: var(--glass-bg-strong); border-color: var(--glass-border-hi); }
+    &[hidden] { display: none; }
+    svg { width: 22px; height: 22px; }
+  }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
 }
 
 // ── Responsive ────────────────────────────────────────────
@@ -396,6 +432,27 @@
   .proj-layout { grid-template-columns: 1fr; }
   .proj-aside { position: static; }
 }
+@media (max-width: 640px) {
+  // Grilles à minima fixes → une seule colonne pour éviter le débordement
+  .proj-videos,
+  .proj-facts,
+  .contributors-grid { grid-template-columns: 1fr; }
+
+  // Le menu « … » ne doit pas dépasser du bord droit de l'écran
+  .proj-more .proj-more-menu {
+    left: auto; right: 0;
+    min-width: 0;
+    width: max-content;
+    max-width: #{"min(260px, calc(100vw - 32px))"};
+  }
+}
 @media (max-width: 560px) {
   .proj-gallery { grid-template-columns: repeat(2, 1fr); }
+  .proj-hero { min-height: 280px; }
+  .proj-hero-body { padding: 20px 16px; }
+  .proj-card { padding: 18px 16px; }
+  .lightbox .lightbox-nav { width: 40px; height: 40px; }
+  .lightbox .lightbox-prev { left: 8px; }
+  .lightbox .lightbox-next { right: 8px; }
+  .lightbox .lightbox-close { top: 12px; right: 12px; }
 }

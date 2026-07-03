@@ -81,15 +81,21 @@ ui_card_projects_desc: "Discover my work"
 ui_card_skills_desc: "C#, .NET, Unity, Blazor…"
 ui_card_blog_desc: "Read the latest articles"
 
-ui_hero_lead: "I code ideas and"
-ui_hero_highlight: "experiences."
+ui_hero_lead: "Game Creator"
+ui_hero_highlight: "+ Developer"
 ui_based_in: "based in"
+ui_of_experience: "of experience"
+ui_year: "year"
+ui_years: "years"
+ui_month: "month"
+ui_months: "months"
 
 ui_rights_reserved: "All rights reserved."
 ui_show_more: "Show more"
 ui_show_less: "Show less"
 ui_prev: "Previous"
 ui_next: "Next"
+ui_close: "Close"
 
 # ─────────────────────────────────────────────
 # Key labels (languages / frameworks / specialties / soft skills / tools)

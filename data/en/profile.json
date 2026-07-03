@@ -3,9 +3,9 @@
     "firstName": "Clément",
     "lastName": "GARCIA",
     "fullName": "Clément 'Clix' GARCIA",
-    "greeting": "Hello!",
+    "greeting": "👋 Hi, I'm Clément",
     "title": "Passionate software and video game developer with particular expertise in the following areas:",
-    "subtitle": "Looking for opportunities to contribute to ambitious projects and grow on the technical side.",
+    "subtitle": "Web, software and game developer. From concept to production, I turn ideas into captivating interactive experiences that leave a mark on users.",
     "bio": "Versatile developer specialized in gameplay mechanics, visual design, and game production. Self-taught, I started by creating additional content for games, which gave me a deep understanding of development processes. With a BUT degree in Application Integration and Information Systems Management from IUT Montpellier-Sète and a Bachelor in Game Development, I honed my skills in project management and technical development during a two-year apprenticeship at Studio La Moutarde. My goal: to keep growing technically and contribute to ambitious projects in game development and software engineering."
   },
   "media": {
@@ -33,7 +33,7 @@
     "experience": "2.5 years"
   },
   "about": {
-    "intro": "Game and software developer, from gameplay to production.",
+    "intro": "From concept to deployment, I build polished applications and experiences, caring as much about architecture as about how it feels to use.",
     "highlights": [
       { "icon": "💼", "text": "2.5 years of professional experience in C# / .NET" },
       { "icon": "🎮", "text": "Contributor to Terra Memoria, a commercial game shipped on PC & consoles" },

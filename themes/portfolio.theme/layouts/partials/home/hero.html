@@ -11,17 +11,21 @@
         <span class="hero-badge"><span class="dot"></span>{{ . }}</span>
         {{- end }}
 
+        {{- with $personal.greeting }}
+        <p class="hero-greeting">{{ . }}</p>
+        {{- end }}
+
         <h1 class="hero-title">
           {{ i18n "ui_hero_lead" }} <span class="grad-text">{{ i18n "ui_hero_highlight" }}</span>
         </h1>
 
         <p class="hero-sub">
-          {{- with $personal.bio }}{{ printf "%s." (index (split . ".") 0) }}{{ else }}{{ $personal.subtitle }}{{ end -}}
+          {{- with $personal.subtitle }}{{ . }}{{ else }}{{ with $personal.bio }}{{ printf "%s." (index (split . ".") 0) }}{{ end }}{{ end -}}
         </p>
 
         <div class="hero-meta">
-          {{- with $p.details.speciality }}
-          <span><span class="hero-meta-ico">⌁</span>{{ . }}</span>
+          {{- with $p.details.experience }}
+          <span><span class="hero-meta-ico">⌁</span>{{ . }} {{ i18n "ui_of_experience" }}</span>
           {{- end }}
           {{- with $contact.location }}
           <span><span class="hero-meta-ico">⌖</span>{{ i18n "ui_based_in" }} {{ . }}</span>

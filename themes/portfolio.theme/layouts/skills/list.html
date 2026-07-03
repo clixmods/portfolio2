@@ -3,11 +3,11 @@
 
 {{/* Catégories de compétences (data/*.json filtrées displayedInPortfolio) */}}
 {{- $cats := slice
-      (dict "title" (i18n "proj_languages")  "sub" false "items" (sort (where site.Data.programming_languages "displayedInPortfolio" true) "experience" "desc"))
-      (dict "title" (i18n "proj_frameworks")  "sub" false "items" (sort (where site.Data.frameworks_engines "displayedInPortfolio" true) "experience" "desc"))
-      (dict "title" (i18n "proj_specialties") "sub" true  "items" (sort (where site.Data.specialties "displayedInPortfolio" true) "experience" "desc"))
-      (dict "title" (i18n "ui_tools")         "sub" false "items" (sort (where site.Data.tools "displayedInPortfolio" true) "experience" "desc"))
-      (dict "title" (i18n "proj_softskills")  "sub" true  "items" (where site.Data.soft_skills "displayedInPortfolio" true))
+      (dict "title" (i18n "proj_languages")  "kind" "years" "items" (sort (where site.Data.programming_languages "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "proj_frameworks")  "kind" "years" "items" (sort (where site.Data.frameworks_engines "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "proj_specialties") "kind" "sub"   "items" (sort (where site.Data.specialties "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "ui_tools")         "kind" "desc"  "items" (sort (where site.Data.tools "displayedInPortfolio" true) "experience" "desc"))
+      (dict "title" (i18n "proj_softskills")  "kind" "sub"   "items" (where site.Data.soft_skills "displayedInPortfolio" true))
 -}}
 
 <section class="section page-shell">
@@ -20,7 +20,7 @@
 
     <div class="skills-sections">
       {{- range $cats }}
-      {{- $title := .title }}{{ $sub := .sub }}
+      {{- $title := .title }}{{ $kind := .kind }}
       {{- with .items }}
       <section class="proj-card reveal">
         <div class="skills-section-head">
@@ -29,7 +29,24 @@
         </div>
         <div class="skills-grid">
           {{- range . }}
-          {{ partial "skill-card.html" (dict "key" .key "experience" .experience "sub" $sub) }}
+          {{- $desc := "" -}}
+          {{- if eq $kind "years" -}}
+            {{- $e := .experience -}}
+            {{- if $e -}}
+              {{- if lt $e 1.0 -}}
+                {{- $m := int (math.Round (mul $e 12)) -}}
+                {{- $desc = printf "%d %s" $m (i18n (cond (eq $m 1) "ui_month" "ui_months")) -}}
+              {{- else -}}
+                {{- $y := int $e -}}
+                {{- $desc = printf "%d %s" $y (i18n (cond (eq $y 1) "ui_year" "ui_years")) -}}
+              {{- end -}}
+            {{- end -}}
+          {{- else if eq $kind "desc" -}}
+            {{- $desc = .description -}}
+          {{- else if eq $kind "sub" -}}
+            {{- $desc = i18n (printf "%s_subtitle" .key) -}}
+          {{- end -}}
+          {{ partial "skill-card.html" (dict "key" .key "desc" $desc) }}
           {{- end }}
         </div>
       </section>

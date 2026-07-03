@@ -139,10 +139,42 @@
     align-items: center;
     gap: 12px;
   }
+
+  // Switch de langue dans le drawer — apparence pill (comme desktop)
+  .mobile-menu-lang {
+    margin-top: 18px;
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-pill);
+      overflow: hidden;
+
+      a {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        padding: 9px 16px;
+        border-bottom: none;
+        color: var(--text-dim);
+        transition: background 0.2s, color 0.2s;
+        &.active { background: var(--glass-bg-strong); color: #fff; }
+        &:hover { color: #fff; }
+      }
+    }
+  }
+
   &.open { display: flex; }
 }
 
 @media (max-width: 1024px) {
   .nav-links { display: none; }
   .nav-burger { display: flex; }
+  .nav-actions { margin-left: auto; }
+  .nav-actions .lang-switch { display: none; }
 }

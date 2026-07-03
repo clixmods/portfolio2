@@ -310,28 +310,81 @@
     schedule();
   });
 
-  // ── Lightbox galerie projet ───────────────────────────
+  // ── Lightbox galerie projet (avec navigation) ─────────
   var lb = document.querySelector("[data-lightbox-overlay]");
   if (lb) {
     var lbImg = lb.querySelector("img");
+    var lbPrev = lb.querySelector("[data-lightbox-prev]");
+    var lbNext = lb.querySelector("[data-lightbox-next]");
+    var group = []; // [{ src, alt }]
+    var current = 0;
+
+    var render = function () {
+      var item = group[current];
+      if (!item) return;
+      lbImg.src = item.src;
+      lbImg.alt = item.alt;
+    };
+    var openLb = function () {
+      var multi = group.length > 1;
+      if (lbPrev) lbPrev.hidden = !multi;
+      if (lbNext) lbNext.hidden = !multi;
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
     var closeLb = function () {
       lb.classList.remove("open");
       lbImg.src = "";
       document.body.style.overflow = "";
     };
+    var go = function (dir) {
+      if (group.length < 2) return;
+      current = (current + dir + group.length) % group.length;
+      render();
+    };
+
     document.querySelectorAll("[data-lightbox]").forEach(function (a) {
       a.addEventListener("click", function (e) {
         e.preventDefault();
-        var inner = a.querySelector("img");
-        lbImg.src = a.getAttribute("href");
-        lbImg.alt = inner ? inner.alt : "";
-        lb.classList.add("open");
-        document.body.style.overflow = "hidden";
+        // On limite la navigation à la galerie contenant l'image cliquée
+        var scope = a.closest("[data-gallery]") || document;
+        var links = Array.prototype.slice.call(scope.querySelectorAll("[data-lightbox]"));
+        group = links.map(function (l) {
+          var img = l.querySelector("img");
+          return { src: l.getAttribute("href"), alt: img ? img.alt : "" };
+        });
+        current = links.indexOf(a);
+        if (current < 0) current = 0;
+        render();
+        openLb();
       });
     });
-    lb.addEventListener("click", closeLb);
+
+    if (lbPrev) lbPrev.addEventListener("click", function (e) { e.stopPropagation(); go(-1); });
+    if (lbNext) lbNext.addEventListener("click", function (e) { e.stopPropagation(); go(1); });
+
+    lb.addEventListener("click", function (e) {
+      // Ne pas fermer quand on clique une flèche de navigation
+      if (e.target.closest("[data-lightbox-prev], [data-lightbox-next]")) return;
+      closeLb();
+    });
+
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && lb.classList.contains("open")) closeLb();
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") closeLb();
+      else if (e.key === "ArrowLeft") go(-1);
+      else if (e.key === "ArrowRight") go(1);
     });
   }
+
+  // ── Galeries : bouton « voir plus » ───────────────────
+  document.querySelectorAll("[data-gallery-more]").forEach(function (btn) {
+    var gallery = btn.parentElement.querySelector("[data-gallery]");
+    if (!gallery) return;
+    btn.addEventListener("click", function () {
+      var expanded = gallery.classList.toggle("expanded");
+      var lbl = expanded ? gallery.getAttribute("data-less-label") : gallery.getAttribute("data-more-label");
+      if (lbl) btn.textContent = lbl;
+    });
+  });
 })();

@@ -19,6 +19,7 @@
 {{- $gPlay := `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>` -}}
 {{- $gCart := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>` -}}
 {{- $gExt := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>` -}}
+{{- $gMore := `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>` -}}
 
 <section class="section proj">
   <div class="container">
@@ -42,7 +43,7 @@
           {{- end }}
           {{- with $extra }}
           <details class="proj-more">
-            <summary class="proj-action" aria-label="Plus de liens">+{{ len . }}</summary>
+            <summary class="proj-action" aria-label="Plus de liens"><span class="proj-action-glyph">{{ $gMore | safeHTML }}</span></summary>
             <div class="proj-more-menu">
               {{- range . }}
               <a class="proj-more-item" data-type="{{ .type }}" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
@@ -64,8 +65,8 @@
       <div class="proj-fact reveal">
         <div class="proj-fact-icon">{{ .icon | default "✨" }}</div>
         <div>
-          <div class="proj-fact-label">{{ .label }}</div>
-          {{- with .value }}<div class="proj-fact-value">{{ . }}</div>{{ end }}
+          <div class="proj-fact-label">{{ .label | safeHTML }}</div>
+          {{- with .value }}<div class="proj-fact-value">{{ . | safeHTML }}</div>{{ end }}
         </div>
       </div>
       {{- end }}
@@ -85,14 +86,17 @@
         {{- with .images }}
         <section class="proj-card reveal">
           <h2 class="proj-section-title">{{ with $gtitle }}{{ . }}{{ else }}{{ i18n "proj_gallery" }}{{ end }}</h2>
-          <div class="proj-gallery">
-            {{- range . }}
-            {{- $u := replace (.url | relURL) " " "%20" }}
-            <a class="proj-gallery-item" data-lightbox href="{{ $u }}">
-              <img src="{{ $u }}" alt="{{ .caption }}" loading="lazy">
+          <div class="proj-gallery" data-gallery data-more-label="{{ i18n "ui_show_more" }}" data-less-label="{{ i18n "ui_show_less" }}">
+            {{- range $i, $img := . }}
+            {{- $u := replace ($img.url | relURL) " " "%20" }}
+            <a class="proj-gallery-item{{ if ge $i 9 }} is-hidden{{ end }}" data-lightbox href="{{ $u }}">
+              <img src="{{ $u }}" alt="{{ $img.caption }}" loading="lazy">
             </a>
             {{- end }}
           </div>
+          {{- if gt (len .) 9 }}
+          <button type="button" class="proj-gallery-more" data-gallery-more>{{ i18n "ui_show_more" }}</button>
+          {{- end }}
         </section>
         {{- end }}
         {{- end }}
@@ -216,7 +220,13 @@
 </section>
 
 <div class="lightbox" data-lightbox-overlay>
-  <span class="lightbox-close" aria-label="Fermer">✕</span>
+  <span class="lightbox-close" aria-label="{{ i18n "ui_close" | default "Fermer" }}">✕</span>
+  <button type="button" class="lightbox-nav lightbox-prev" data-lightbox-prev aria-label="{{ i18n "ui_prev" }}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
   <img src="" alt="">
+  <button type="button" class="lightbox-nav lightbox-next" data-lightbox-next aria-label="{{ i18n "ui_next" }}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
 </div>
 {{ end }}
