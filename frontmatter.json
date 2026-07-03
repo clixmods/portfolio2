@@ -464,6 +464,11 @@
             "Travail en équipe",
             "Gestion du temps"
           ]
+        },
+        {
+          "title": "contract_type",
+          "name": "contract_type",
+          "type": "string"
         }
       ]
     },

@@ -49,7 +49,7 @@ tools:
     - tool_discord
     - tool_docker
 fmContentType: experience-content-type
-date: 2025-11-01T00:00:00.000Z
+date: 2026-07-03T12:56:36.242Z
 draft: false
 ranking:
     event_type: Classement
