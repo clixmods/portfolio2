@@ -121,8 +121,19 @@
   .timeline-logo { width: 68px; height: 68px; }
 }
 
-@media (max-width: 600px) {
-  .timeline-item { grid-template-columns: 0 1fr; gap: 0; }
-  .timeline-rail { display: none; }
+@media (max-width: 768px) {
+  // L'en-tête passe en multi-lignes tôt pour que le titre ne soit jamais
+  // comprimé entre le logo et le badge sur grands téléphones / petites tablettes.
   .timeline-head { flex-wrap: wrap; }
+  .timeline-badge { order: 3; margin-top: 4px; }
+  .timeline-headings { flex-basis: calc(100% - 72px); }
+}
+
+@media (max-width: 600px) {
+  // Le rail est masqué : la carte doit occuper une unique colonne pleine largeur.
+  // (Avec `0 1fr`, la carte se replaçait dans la colonne 0 → largeur nulle, tout s'écrasait.)
+  .timeline-item { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .timeline-rail { display: none; }
+  .timeline-logo { width: 44px; height: 44px; }
+  .timeline-headings { flex-basis: calc(100% - 60px); }
 }
