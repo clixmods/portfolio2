@@ -63,7 +63,13 @@
     white-space: nowrap;
     transition: color 0.2s ease, background 0.2s ease;
 
-    .nav-ico { font-size: 0.9rem; opacity: 0.85; }
+    .nav-ico {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.85;
+      svg { width: 17px; height: 17px; }
+    }
     &:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
   }
 }
@@ -138,6 +144,14 @@
     display: flex;
     align-items: center;
     gap: 12px;
+  }
+
+  .nav-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    svg { width: 21px; height: 21px; }
   }
 
   // Switch de langue dans le drawer — apparence pill (comme desktop)
