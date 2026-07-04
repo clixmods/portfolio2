@@ -4,9 +4,8 @@
   @include glass(var(--r-xl));
   @include glass-sheen;
   display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
+  grid-template-columns: 1.35fr 0.65fr;
   align-items: stretch;
-  min-height: 400px;
   background:
     radial-gradient(80% 120% at 100% 0%, rgba(244, 63, 94, 0.22), transparent 55%),
     radial-gradient(70% 110% at 0% 100%, rgba(59, 130, 246, 0.18), transparent 55%),
@@ -14,11 +13,11 @@
 }
 
 .hero-content {
-  padding: clamp(28px, 4vw, 52px);
+  padding: clamp(26px, 3.5vw, 44px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 22px;
+  gap: 18px;
 }
 
 .hero-badge {
@@ -95,13 +94,13 @@
   border-radius: inherit;
   display: grid;
   place-items: center;
-  padding: clamp(16px, 2.5vw, 28px);
+  padding: clamp(12px, 2vw, 22px) clamp(12px, 2vw, 22px) clamp(12px, 2vw, 22px) 0;
 }
 
 // Photo en cadre rond avec anneau dégradé froid → chaud
 .hero-photo {
   position: relative;
-  width: #{"min(92%, 320px)"};
+  width: #{"min(100%, 340px)"};
   aspect-ratio: 1;
   border-radius: 50%;
   padding: 5px;
