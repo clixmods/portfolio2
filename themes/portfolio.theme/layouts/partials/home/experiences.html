@@ -1,0 +1,56 @@
+{{- /* Expériences + projets associés (accueil).
+       Réutilise le lien front-matter projects[].project_ref, le markup timeline
+       et la carte projet partagée — cf. experiences/list.html & single.html. */ -}}
+{{- $exp := site.GetPage "/experiences" -}}
+{{- with $exp -}}
+{{- $items := sort .Pages "Params.start_date" "desc" -}}
+{{- with $items }}
+<div class="home-exp">
+  <div class="section-head">
+    <div><span class="section-eyebrow">{{ i18n "ui_experiences" }}</span></div>
+    <a class="btn btn-ghost" href="{{ relLangURL "/experiences/" }}">{{ i18n "ui_view_all" }}</a>
+  </div>
+
+  {{- range . }}
+    {{- $P := .Params -}}
+    {{- $expUrl := .RelPermalink -}}
+    {{- $endLabel := i18n "exp_now" }}{{ with $P.end_date }}{{ $endLabel = time.Format "Jan 2006" . }}{{ end }}
+    <article class="home-exp-item reveal">
+      <div class="timeline-card">
+        <div class="timeline-head">
+          {{- with $P.logo }}
+          {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 200 "quality" 85) }}
+          <img class="timeline-logo" src="{{ $img.src }}" alt="{{ $P.company }}" loading="lazy"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
+          {{- end }}
+          <div class="timeline-headings">
+            <div class="timeline-title">{{ .Title }}</div>
+            {{- with $P.company }}<div class="timeline-org">{{ . }}</div>{{ end }}
+            <div class="timeline-sub">
+              {{- with $P.start_date }}<span>🗓 {{ time.Format "Jan 2006" . }} – {{ $endLabel }}</span>{{ end }}
+              {{- with $P.location }}<span>⌖ {{ . }}</span>{{ end }}
+            </div>
+          </div>
+          {{- with $P.contract_type }}<span class="timeline-badge">{{ . }}</span>{{ end }}
+        </div>
+        {{- with $P.description }}<p class="timeline-desc">{{ . }}</p>{{ end }}
+
+        {{- with $P.projects }}
+        <div class="home-exp-projects">
+          <div class="home-exp-projects-head">
+            <span class="home-exp-projects-title">{{ i18n "exp_projects" }}</span>
+            <a class="home-exp-link" href="{{ $expUrl }}">{{ i18n "exp_view" }} →</a>
+          </div>
+          <div class="projects-grid">
+            {{- range . }}
+            {{- $proj := site.GetPage (printf "/projects/%s" .project_ref) -}}
+            {{- with $proj }}{{ partial "project-card.html" (dict "page" .) }}{{ end }}
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
+      </div>
+    </article>
+    {{- end }}
+</div>
+{{- end }}
+{{- end -}}

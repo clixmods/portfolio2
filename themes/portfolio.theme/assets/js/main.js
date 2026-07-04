@@ -55,7 +55,9 @@
   if (fbar) {
     var mains = fbar.querySelectorAll("[data-main]");
     var subRows = fbar.querySelectorAll("[data-subs-for]");
-    var cards = document.querySelectorAll("[data-project]");
+    // Scoper au conteneur du filtre : n'affecte que la mosaïque/grille voisine,
+    // pas les autres cartes projet de la page (ex. section Expériences en accueil).
+    var cards = (fbar.parentElement || document).querySelectorAll("[data-project]");
     var curMain = "all";
     var curSub = "all";
     var selTech = [];
