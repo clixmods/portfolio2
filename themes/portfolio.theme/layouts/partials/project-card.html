@@ -19,7 +19,10 @@
 <a class="project-card reveal{{ with $class }} {{ . }}{{ end }}" href="{{ $p.RelPermalink }}"
    data-project data-main="{{ $cat.main }}" data-sub="{{ $cat.sub }}" data-tech="{{ delimit $allTech " " }}">
   <div class="project-thumb">
-    {{- with $p.Params.image }}<img src="{{ . | relURL }}" alt="{{ $p.Title }}" loading="lazy">{{ end }}
+    {{- with $p.Params.image }}
+    {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 600 "quality" 85) }}
+    <img src="{{ $img.src }}" alt="{{ $p.Title }}" loading="lazy"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
+    {{- end }}
     {{- if $mainLabel }}<span class="tag project-sector">{{ $mainLabel }}{{ with $subLabel }} · {{ . }}{{ end }}</span>{{ end }}
   </div>
   <div class="project-body">

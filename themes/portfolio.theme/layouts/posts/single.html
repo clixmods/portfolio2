@@ -6,7 +6,10 @@
     <article class="article">
       <a class="proj-back" href="{{ relLangURL "/posts/" }}">← {{ i18n "back_blog" }}</a>
 
-      {{- with $P.image }}<div class="article-hero"><img src="{{ . | relURL }}" alt="{{ $page.Title }}"></div>{{ end }}
+      {{- with $P.image }}
+      {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 1200 "quality" 90) }}
+      <div class="article-hero"><img src="{{ $img.src }}" alt="{{ $page.Title }}"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}></div>
+      {{- end }}
 
       <header class="article-head">
         <div class="article-meta">

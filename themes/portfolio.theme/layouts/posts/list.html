@@ -15,7 +15,10 @@
       {{- $post := . -}}
       <a class="post-card reveal" href="{{ .RelPermalink }}">
         <div class="post-thumb">
-          {{- with .Params.image }}<img src="{{ . | relURL }}" alt="{{ $post.Title }}" loading="lazy">{{ end }}
+          {{- with .Params.image }}
+          {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 800 "quality" 85) }}
+          <img src="{{ $img.src }}" alt="{{ $post.Title }}" loading="lazy"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
+          {{- end }}
           {{- with .Params.category }}<span class="tag post-cat">{{ . }}</span>{{ end }}
         </div>
         <div class="post-body">

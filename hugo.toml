@@ -26,6 +26,10 @@ defaultContentLanguageInSubdir = false
       weight = 2
       title = "Portfolio - Clément 'Clix' GARCIA"
     
+# Image processing defaults (quality is passed explicitly by get-optimized-image.html)
+[imaging]
+  resampleFilter = "Lanczos"
+
 # Module mounts - Allow Hugo to process static images as resources
 [module]
   [[module.mounts]]

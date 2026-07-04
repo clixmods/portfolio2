@@ -22,7 +22,10 @@
   <div class="container">
     <nav class="navbar" data-navbar>
       <a class="nav-brand" href="{{ relLangURL "/" }}">
-        {{- with $p.media.profileImage }}<img src="{{ . | relURL }}" alt="{{ $personal.fullName }}" loading="eager" width="40" height="40">{{ end }}
+        {{- with $p.media.profileImage }}
+        {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 80 "quality" 85) }}
+        <img src="{{ $img.src }}" alt="{{ $personal.fullName }}" loading="eager" width="{{ $img.width | default 40 }}" height="{{ $img.height | default 40 }}">
+        {{- end }}
         <span>
           <span class="nav-brand-name">{{ upper $personal.firstName }} {{ upper $personal.lastName }}</span>
         </span>

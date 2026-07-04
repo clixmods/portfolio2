@@ -22,5 +22,21 @@ defaultContentLanguageInSubdir = false
 		weight = 2
 		title = "Portfolio - Clément 'Clix' GARCIA"
 		
+# Image processing defaults - keep in sync with hugo.toml
+[imaging]
+  resampleFilter = "Lanczos"
+
+# Module mounts - keep in sync with hugo.toml (required so resources.Get "images/..." resolves)
+[module]
+  [[module.mounts]]
+    source = "static/images"
+    target = "assets/images"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+
 # Optional: surface missing i18n keys during development
 # enableMissingTranslationPlaceholders = true

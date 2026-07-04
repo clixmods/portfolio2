@@ -27,9 +27,14 @@
 
     {{/* ── HERO ── */}}
     <header class="proj-hero reveal">
-      {{- with $P.image }}<div class="proj-hero-bg"><img src="{{ . | relURL }}" alt="{{ $page.Title }}"></div>{{ end }}
+      {{- with $P.image }}
+      {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 1920 "quality" 90) }}
+      <div class="proj-hero-bg"><img src="{{ $img.src }}" alt="{{ $page.Title }}" fetchpriority="high"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}></div>
+      {{- end }}
       <div class="proj-hero-body">
-        {{- if $P.logo }}<img class="proj-logo" src="{{ $P.logo | relURL }}" alt="{{ $page.Title }}">
+        {{- if $P.logo }}
+        {{- $img := partial "get-optimized-image.html" (dict "imagePath" $P.logo "width" 200 "quality" 85) }}
+        <img class="proj-logo" src="{{ $img.src }}" alt="{{ $page.Title }}"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
         {{- else }}<h1 class="proj-hero-title">{{ $page.Title }}</h1>{{ end }}
         {{- with $P.subtitle }}<p class="proj-hero-sub">{{ . }}</p>{{ end }}
         {{- with $P.actions }}
@@ -88,9 +93,11 @@
           <h2 class="proj-section-title">{{ with $gtitle }}{{ . }}{{ else }}{{ i18n "proj_gallery" }}{{ end }}</h2>
           <div class="proj-gallery" data-gallery data-more-label="{{ i18n "ui_show_more" }}" data-less-label="{{ i18n "ui_show_less" }}">
             {{- range $i, $img := . }}
-            {{- $u := replace ($img.url | relURL) " " "%20" }}
-            <a class="proj-gallery-item{{ if ge $i 9 }} is-hidden{{ end }}" data-lightbox href="{{ $u }}">
-              <img src="{{ $u }}" alt="{{ $img.caption }}" loading="lazy">
+            {{- /* Vignette légère dans la grille ; la lightbox JS charge la version HD via le href */ -}}
+            {{- $thumb := partial "get-optimized-image.html" (dict "imagePath" $img.url "width" 500 "quality" 85) }}
+            {{- $full := partial "get-optimized-image.html" (dict "imagePath" $img.url "width" 1920 "quality" 90) }}
+            <a class="proj-gallery-item{{ if ge $i 9 }} is-hidden{{ end }}" data-lightbox href="{{ replace $full.src " " "%20" }}">
+              <img src="{{ replace $thumb.src " " "%20" }}" alt="{{ $img.caption }}" loading="lazy"{{ with $thumb.width }} width="{{ . }}"{{ end }}{{ with $thumb.height }} height="{{ . }}"{{ end }}>
             </a>
             {{- end }}
           </div>
@@ -136,7 +143,8 @@
             {{- else }}{{ $name = .name | default ($pid | humanize | title) }}{{ end -}}
             {{- $roles := .roles }}{{ if and (not $roles) .role }}{{ $roles = slice .role }}{{ end -}}
             <div class="contributor{{ if $isMe }} is-me{{ end }}">
-              <img class="contributor-avatar" src="{{ $avatar | relURL }}" alt="{{ $name }}" loading="lazy" onerror="this.onerror=null;this.src='{{ $default | relURL }}'">
+              {{- $img := partial "get-optimized-image.html" (dict "imagePath" $avatar "width" 120 "quality" 85) }}
+              <img class="contributor-avatar" src="{{ $img.src }}" alt="{{ $name }}" loading="lazy"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }} onerror="this.onerror=null;this.src='{{ $default | relURL }}'">
               <div>
                 <div class="contributor-name">{{ $name }}{{ if $isMe }}<span class="contributor-me">{{ i18n "proj_you" }}</span>{{ end }}</div>
                 <div class="contributor-roles">{{ with $roles }}{{ delimit . ", " }}{{ end }}</div>

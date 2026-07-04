@@ -1,0 +1,54 @@
+{{- /*
+  get-optimized-image — résout un chemin "/images/..." en ressource WebP redimensionnée,
+  avec fallback vers l'URL statique brute. Ne fait JAMAIS échouer le build.
+
+  Input (dict) :
+    imagePath : string, ex. "/images/projects/foo/bar.png" (requis)
+    width     : largeur cible en px (défaut 800) — n'upscale jamais
+    quality   : qualité d'encodage 1-100 (défaut 85)
+    format    : "webp", "jpg", "png" ou "original" (défaut "webp")
+
+  Retour (dict) :
+    src        : URL pour src/href
+    width      : largeur intrinsèque  (0 si non traité — émettre les attrs conditionnellement !)
+    height     : hauteur intrinsèque  (0 si non traité)
+    isResource : true si l'image a été traitée par le pipeline Hugo
+
+  Exemple :
+  {{ $img := partial "get-optimized-image.html" (dict "imagePath" .Params.image "width" 800 "quality" 85) }}
+  <img src="{{ $img.src }}"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }} alt="...">
+*/ -}}
+{{- $imagePath := strings.TrimSpace (.imagePath | default "") -}}
+{{- $width := .width | default 800 -}}
+{{- $quality := .quality | default 85 -}}
+{{- $format := .format | default "webp" -}}
+
+{{- /* Fallback conservé tant que le traitement n'a pas abouti */ -}}
+{{- $ret := dict "src" ($imagePath | relURL) "width" 0 "height" 0 "isResource" false -}}
+
+{{- /* "/images/foo.png" ou "images/foo.png" → "foo.png" */ -}}
+{{- $clean := strings.TrimPrefix "/" $imagePath -}}
+{{- $clean = strings.TrimPrefix "images/" $clean -}}
+
+{{- with resources.Get (printf "images/%s" $clean) -}}
+  {{- $res := . -}}
+  {{- $ext := lower (path.Ext $clean) -}}
+  {{- if in (slice ".svg" ".gif") $ext -}}
+    {{- /* SVG : vectoriel, non redimensionnable. GIF : la conversion webp perd l'animation. */ -}}
+  {{- else if and (eq $ext ".webp") (eq $format "webp") -}}
+    {{- /* Déjà en webp — passthrough. */ -}}
+  {{- else if strings.HasPrefix $res.MediaType.Type "image" -}}
+    {{- $w := int (math.Min $width $res.Width) -}}
+    {{- $spec := printf "%dx %s q%d" $w $format $quality -}}
+    {{- if eq $format "original" -}}{{- $spec = printf "%dx" $w -}}{{- end -}}
+    {{- $r := try ($res.Resize $spec) -}}
+    {{- with $r.Err -}}
+      {{- warnf "get-optimized-image: resize failed for %q (%s) — using static URL" $imagePath . -}}
+    {{- else -}}
+      {{- with $r.Value -}}
+        {{- $ret = dict "src" .RelPermalink "width" .Width "height" .Height "isResource" true -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $ret -}}

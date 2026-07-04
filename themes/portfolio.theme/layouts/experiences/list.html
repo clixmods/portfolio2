@@ -20,7 +20,10 @@
         <div class="timeline-rail"><span class="timeline-marker"></span></div>
         <div class="timeline-card">
           <div class="timeline-head">
-            {{- with $P.logo }}<img class="timeline-logo" src="{{ . | relURL }}" alt="{{ $P.company }}" loading="lazy">{{ end }}
+            {{- with $P.logo }}
+            {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 200 "quality" 85) }}
+            <img class="timeline-logo" src="{{ $img.src }}" alt="{{ $P.company }}" loading="lazy"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
+            {{- end }}
             <div class="timeline-headings">
               <div class="timeline-title">{{ .Title }}</div>
               {{- with $P.company }}<div class="timeline-org">{{ . }}</div>{{ end }}

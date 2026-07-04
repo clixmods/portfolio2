@@ -8,7 +8,10 @@
 
     <header class="proj-card reveal exp-hero">
       <div class="timeline-head">
-        {{- with $P.logo }}<img class="timeline-logo" src="{{ . | relURL }}" alt="{{ $P.company }}">{{ end }}
+        {{- with $P.logo }}
+        {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 200 "quality" 85) }}
+        <img class="timeline-logo" src="{{ $img.src }}" alt="{{ $P.company }}"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
+        {{- end }}
         <div class="timeline-headings">
           <h1 class="timeline-title">{{ $page.Title }}</h1>
           {{- with $P.company }}<div class="timeline-org">{{ . }}</div>{{ end }}

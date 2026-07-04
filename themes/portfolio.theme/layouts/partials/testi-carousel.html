@@ -20,7 +20,10 @@
       <blockquote class="testi-quote">{{ $t.text }}</blockquote>
       <button type="button" class="testi-more" data-more hidden>{{ i18n "ui_show_more" }}</button>
       <figcaption class="testi-author">
-        {{- with $avatar }}<img src="{{ . | relURL }}" alt="{{ $name }}" loading="lazy">{{ end }}
+        {{- with $avatar }}
+        {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 120 "quality" 85) }}
+        <img src="{{ $img.src }}" alt="{{ $name }}" loading="lazy"{{ with $img.width }} width="{{ . }}"{{ end }}{{ with $img.height }} height="{{ . }}"{{ end }}>
+        {{- end }}
         <span>
           <span class="testimonial-name">{{ $name }}</span>
           <span class="testimonial-role">{{ $t.position }}{{ with $t.company }} · {{ . }}{{ end }}</span>
