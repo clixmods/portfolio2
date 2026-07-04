@@ -1,3 +1,4 @@
+{{- $page := .page -}}
 {{- $sd := .sd -}}
 {{- $p := $sd.profile -}}
 <footer class="footer">
@@ -8,6 +9,13 @@
         <span>{{ $p.details.speciality }}</span>
       </div>
       {{ partial "social-links.html" $sd.config }}
+      {{- if gt (len $page.AllTranslations) 0 }}
+      <span class="lang-switch">
+        {{- range $page.AllTranslations }}
+        <a href="{{ .RelPermalink }}" class="{{ if eq .Language.Lang $page.Site.Language.Lang }}active{{ end }}">{{ upper .Language.Lang }}</a>
+        {{- end }}
+      </span>
+      {{- end }}
       <div class="footer-copy">
         © {{ now.Year }} {{ $p.personal.fullName }}. {{ i18n "ui_rights_reserved" }}
       </div>

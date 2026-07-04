@@ -9,6 +9,7 @@ ui_blog: "Blog"
 ui_contact: "Contact"
 ui_experiences: "Experience"
 ui_educations: "Education"
+ui_services: "Freelance"
 
 ui_download_cv: "Download CV"
 ui_cv: "CV"
@@ -24,6 +25,14 @@ ui_recent_projects: "Recent projects"
 ui_featured_projects: "Featured projects"
 ui_technologies: "Technologies"
 ui_tools: "Tools"
+
+# Freelance services page
+svc_kicker: "Freelance services"
+svc_pricing_from: "From"
+svc_pricing_unit: "/ day"
+svc_contact_title: "Let's talk about your project"
+svc_quote_btn: "Request a quote"
+svc_mail_subject: "Quote request — freelance development"
 
 # Projects page filters
 cat_all: "All"

@@ -44,6 +44,25 @@
   &:hover { color: #fff; border-color: var(--glass-border-hi); transform: translateY(-3px); }
 }
 
+// Switch de langue FR/EN — apparence pill verre
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+
+  a {
+    padding: 7px 11px;
+    transition: background 0.2s, color 0.2s;
+    &.active { background: var(--glass-bg-strong); color: #fff; }
+    &:hover { color: #fff; }
+  }
+}
+
 .footer-copy { font-size: 0.78rem; color: var(--text-faint); }
 
 @media (max-width: 620px) {
