@@ -46,7 +46,9 @@
       <div class="hero-visual">
         {{- with $p.media.profileImage }}
         {{- $img := partial "get-optimized-image.html" (dict "imagePath" . "width" 600 "quality" 90) }}
-        <img src="{{ $img.src }}" alt="{{ $personal.fullName }}" width="{{ $img.width | default 600 }}" height="{{ $img.height | default 600 }}" fetchpriority="high">
+        <div class="hero-photo">
+          <img src="{{ $img.src }}" alt="{{ $personal.fullName }}" width="{{ $img.width | default 600 }}" height="{{ $img.height | default 600 }}" fetchpriority="high">
+        </div>
         {{- end }}
       </div>
     </div>
